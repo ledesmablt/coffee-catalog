@@ -94,11 +94,7 @@ const Container = styled('div')({
   marginTop: 40,
   marginBottom: 40,
   width: '90%',
-  [mq[1]]: {
-    marginLeft: 120,
-    marginRight: 120,
-    width: 'calc(640px * 0.9)'
-  }
+  maxWidth: 'calc(640px * 0.9)'
 })
 
 const Section = styled('div')({
