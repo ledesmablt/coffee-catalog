@@ -14,23 +14,21 @@ interface Project {
 const projects: Project[] = [
   {
     title: 'quickscope',
-    imageUrl:
-      'https://user-images.githubusercontent.com/22242264/152639247-f50bf847-26f8-490a-8d2e-5cae1e8ec66a.gif',
+    imageUrl: '/images/quickscope-demo.gif',
     description:
       'a chrome & firefox extension for your new tab. build & search custom lists quickly. typos are forgiven.',
     moreInfoUrl: 'https://github.com/ledesmablt/quickscope'
   },
   {
     title: 'spotify-cli',
-    imageUrl: 'images/spotify-cli-demo.gif',
+    imageUrl: '/images/spotify-cli-demo.gif',
     description:
       'control Spotify playback on any device through the command line.',
     moreInfoUrl: 'https://github.com/ledesmablt/spotify-cli'
   },
   {
     title: 'vim-run',
-    imageUrl:
-      'https://user-images.githubusercontent.com/22242264/97441234-73c9e500-1963-11eb-81ae-72bcab2b8b87.gif',
+    imageUrl: '/images/vim-run-demo.gif',
     description:
       'run, view, and manage UNIX shell commands with ease from your favorite code editor.',
     moreInfoUrl: 'https://github.com/ledesmablt/vim-run'
@@ -169,7 +167,7 @@ const Home: NextPage = () => {
               }}
             >
               <div>
-                <p style={{ margin: 0, marginLeft: 1 }}>hi, i'm</p>
+                <p style={{ margin: 0, marginLeft: 1 }}>{"hi, i'm"}</p>
                 <h1 style={{ margin: 0, marginTop: 2 }}>Benj Ledesma</h1>
                 <p style={{ margin: 0, marginTop: 18 }}>
                   i like building useful stuff.
@@ -223,7 +221,7 @@ const Home: NextPage = () => {
                   borderRadius: '100%',
                   width: 210
                 }}
-                src='https://avatars.githubusercontent.com/u/22242264?v=4'
+                src='/images/me.jpeg'
                 alt='me'
               />
             </div>
@@ -291,7 +289,7 @@ const Home: NextPage = () => {
           <Divider />
 
           <Section>
-            <SectionHeader>i'm comfortable with</SectionHeader>
+            <SectionHeader>{"i'm comfortable with"}</SectionHeader>
             <List>
               {comfortableWith.map((s, index) => (
                 <li key={`cw-${index}`}>{s}</li>
@@ -300,7 +298,7 @@ const Home: NextPage = () => {
           </Section>
 
           <Section>
-            <SectionHeader>i've tried out</SectionHeader>
+            <SectionHeader>{"i've tried out"}</SectionHeader>
             <List>
               {triedOut.map((s, index) => (
                 <li key={`to-${index}`}>{s}</li>
