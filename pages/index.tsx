@@ -161,53 +161,71 @@ const Home: NextPage = () => {
       <Wrapper>
         <Container>
           <Section>
-            <div>
-              <p style={{ margin: 0, marginLeft: 1 }}>hi, i'm</p>
-              <h1 style={{ margin: 0, marginTop: 2 }}>Benj Ledesma</h1>
-              <p style={{ margin: 0, marginTop: 18 }}>
-                i like building useful stuff.
-              </p>
-            </div>
-
             <div
               style={{
                 display: 'flex',
-                flexDirection: 'column',
                 alignItems: 'center',
-                gap: 2
+                justifyContent: 'space-between'
               }}
             >
-              <div
-                style={{
-                  marginTop: 32,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8
-                }}
-              >
-                {socialLinks.map((s) => (
-                  <a
-                    key={`s-${s.title}`}
-                    href={s.url}
-                    target='_blank'
-                    rel='noreferrer'
+              <div>
+                <p style={{ margin: 0, marginLeft: 1 }}>hi, i'm</p>
+                <h1 style={{ margin: 0, marginTop: 2 }}>Benj Ledesma</h1>
+                <p style={{ margin: 0, marginTop: 18 }}>
+                  i like building useful stuff.
+                </p>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2
+                  }}
+                >
+                  <div
+                    style={{
+                      marginTop: 30,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 8
+                    }}
                   >
-                    <img
-                      src={s.imageUrl}
-                      alt={s.title}
-                      style={{ objectFit: 'contain', width: 24 * s.widthScale }}
-                    />
-                  </a>
-                ))}
+                    {socialLinks.map((s) => (
+                      <a
+                        key={`s-${s.title}`}
+                        href={s.url}
+                        target='_blank'
+                        rel='noreferrer'
+                      >
+                        <img
+                          src={s.imageUrl}
+                          alt={s.title}
+                          style={{
+                            objectFit: 'contain',
+                            width: 24 * s.widthScale
+                          }}
+                        />
+                      </a>
+                    ))}
+                  </div>
+                  <code
+                    style={{
+                      fontFamily: 'Hack',
+                      fontSize: 12
+                    }}
+                  >
+                    @ledesmablt
+                  </code>
+                </div>
               </div>
-              <code
+              <img
                 style={{
-                  fontFamily: 'Hack',
-                  fontSize: 12
+                  borderRadius: '100%',
+                  width: 210
                 }}
-              >
-                @ledesmablt
-              </code>
+                src='https://avatars.githubusercontent.com/u/22242264?v=4'
+                alt='me'
+              />
             </div>
           </Section>
 
