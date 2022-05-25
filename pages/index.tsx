@@ -158,6 +158,11 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Benj Ledesma</title>
+        <meta property='og:image' content='/images/me.jpg' />
+        <meta
+          property='og:description'
+          content='i like building useful stuff.'
+        />
       </Head>
       <Wrapper>
         <Container>
