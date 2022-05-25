@@ -310,6 +310,21 @@ const Home: NextPage = () => {
               ))}
             </List>
           </Section>
+
+          <Divider />
+
+          <Section style={{ display: 'flex', justifyContent: 'center' }}>
+            <p style={{ margin: 0 }}>
+              hit me up:{' '}
+              <a
+                href='mailto:benj.ledesma@gmail.com'
+                target={'_blank'}
+                rel={'noreferrer'}
+              >
+                benj.ledesma@gmail.com
+              </a>
+            </p>
+          </Section>
         </Container>
       </Wrapper>
     </>
