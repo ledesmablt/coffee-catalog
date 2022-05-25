@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Image from 'next/image'
 import { useState } from 'react'
 
 const mq = [0, 640, 900].map((bp) => `@media (min-width: ${bp}px)`)
@@ -16,7 +17,7 @@ const projects: Project[] = [
     title: 'quickscope',
     imageUrl: '/images/quickscope-demo.gif',
     description:
-      'a chrome & firefox extension for your new tab. build & search custom lists quickly. typos are forgiven.',
+      'a chrome & firefox extension for your new tab. build & search custom lists quickly.',
     moreInfoUrl: 'https://github.com/ledesmablt/quickscope'
   },
   {
@@ -44,13 +45,13 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   {
     url: 'https://github.com/ledesmablt',
-    imageUrl: 'github.svg',
+    imageUrl: '/github.svg',
     title: 'GitHub profile',
     widthScale: 1
   },
   {
     url: 'https://www.linkedin.com/in/benj-ledesma-581a65107/',
-    imageUrl: 'linkedin.svg',
+    imageUrl: '/linkedin.svg',
     title: 'LinkedIn profile',
     widthScale: 1.2
   }
@@ -92,11 +93,11 @@ const Container = styled('div')({
   gap: 20,
   marginTop: 40,
   marginBottom: 40,
-  width: '80%',
+  width: '90%',
   [mq[1]]: {
     marginLeft: 120,
     marginRight: 120,
-    width: 'calc(640px * 0.8)'
+    width: 'calc(640px * 0.9)'
   }
 })
 
@@ -110,19 +111,21 @@ const Divider = styled('div')({
   margin: 20
 })
 
-const ProjectImgContainer = styled('div')({
-  height: '80vw',
-  [mq[0]]: {
-    maxHeight: 455
-  },
+const ProfileImg = styled('img')({
+  width: 180,
+  height: 180,
+  borderRadius: '100%',
+  paddingLeft: 4,
   [mq[1]]: {
-    height: 'auto'
+    width: 210,
+    height: 210
   }
 })
 
-const ProjectImg = styled('img')({
-  objectFit: 'contain',
-  width: '100%',
+const ProjectImg = styled('div')({
+  position: 'relative',
+  background: '#e6e6e6',
+  height: 280,
   [mq[1]]: {
     height: 380
   }
@@ -216,26 +219,23 @@ const Home: NextPage = () => {
                   </code>
                 </div>
               </div>
-              <img
-                style={{
-                  borderRadius: '100%',
-                  width: 210
-                }}
-                src='/images/me.jpeg'
-                alt='me'
-              />
+              <ProfileImg src='/images/me.jpeg' alt='me' />
             </div>
           </Section>
 
           <Divider />
 
-          <Section>
+          <Section style={{ justifyContent: 'space-between' }}>
             <SectionHeader>some personal projects</SectionHeader>
-            <ProjectImgContainer>
-              <ProjectImg
-                src={project.imageUrl}
-                alt={`Project preview: ${project.title}`}
-              />
+            <div>
+              <ProjectImg>
+                <Image
+                  src={project.imageUrl}
+                  alt={`Project preview: ${project.title}`}
+                  layout={'fill'}
+                  objectFit={'contain'}
+                />
+              </ProjectImg>
               <p>
                 <b>{project.title}</b>: {project.description}{' '}
                 {project.moreInfoUrl && (
@@ -248,7 +248,7 @@ const Home: NextPage = () => {
                   </a>
                 )}
               </p>
-            </ProjectImgContainer>
+            </div>
             <div
               style={{
                 display: 'flex',
