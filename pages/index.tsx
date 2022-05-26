@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
 
-const mq = [0, 640, 900].map((bp) => `@media (min-width: ${bp}px)`)
+const mq = [440, 640, 900].map((bp) => `@media (min-width: ${bp}px)`)
 
 interface Project {
   imageUrl: string
@@ -145,6 +145,19 @@ const SectionHeader = styled('h3')({
   marginTop: 0
 })
 
+const BoxHideSmall = styled('div')({
+  display: 'none',
+  [mq[0]]: {
+    display: 'inherit'
+  }
+})
+
+const BoxShowSmall = styled('div')({
+  [mq[0]]: {
+    display: 'none'
+  }
+})
+
 const Home: NextPage = () => {
   const [projectIndex, setProjectIndex] = useState(0)
 
@@ -171,11 +184,24 @@ const Home: NextPage = () => {
               }}
             >
               <div>
-                <p style={{ margin: 0, marginLeft: 1 }}>{"hi, i'm"}</p>
-                <h1 style={{ margin: 0, marginTop: 2 }}>Benj Ledesma</h1>
-                <p style={{ margin: 0, marginTop: 18 }}>
-                  i like building useful stuff.
-                </p>
+                <BoxHideSmall>
+                  <p style={{ margin: 0, marginLeft: 1 }}>{"hi, i'm"}</p>
+                  <h1 style={{ margin: 0, marginTop: 2, marginBottom: 18 }}>
+                    Benj Ledesma
+                  </h1>
+                </BoxHideSmall>
+                <BoxShowSmall>
+                  <p
+                    style={{
+                      margin: 0,
+                      marginLeft: 1,
+                      marginBottom: 10
+                    }}
+                  >
+                    {"hi, i'm"} <b>Benj Ledesma</b>.
+                  </p>
+                </BoxShowSmall>
+                <p style={{ margin: 0 }}>i like building useful stuff.</p>
 
                 <div
                   style={{
