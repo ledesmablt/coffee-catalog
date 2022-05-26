@@ -107,8 +107,8 @@ const Divider = styled('div')({
 })
 
 const ProfileImg = styled('img')({
-  width: 180,
-  height: 180,
+  width: 160,
+  height: 160,
   borderRadius: '100%',
   paddingLeft: 4,
   [mq[1]]: {
