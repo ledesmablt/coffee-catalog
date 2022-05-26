@@ -161,6 +161,8 @@ const BoxShowSmall = styled('div')({
   }
 })
 
+const BASE_URL = 'https://ledesmablt.com'
+
 const Home: NextPage = () => {
   const [projectIndex, setProjectIndex] = useState(0)
 
@@ -170,10 +172,10 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Benj Ledesma</title>
-        <meta property='og:url' content='https://ledesmablt.com' />
+        <meta property='og:url' content={BASE_URL} />
         <meta property='og:type' content='website' />
         <meta property='og:title' content='Benj Ledesma' />
-        <meta property='og:image' content='/images/me.jpg' />
+        <meta property='og:image' content={`${BASE_URL}/images/me.jpg`} />
         <meta
           property='og:description'
           content='i like building useful stuff.'
