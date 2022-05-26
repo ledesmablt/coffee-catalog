@@ -2,7 +2,9 @@ import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState } from 'react'
+import { ReactElement, useState } from 'react'
+import GitHub from '../components/svgs/GitHub'
+import LinkedIn from '../components/svgs/LinkedIn'
 
 const mq = [440, 640, 900].map((bp) => `@media (min-width: ${bp}px)`)
 
@@ -38,22 +40,19 @@ const projects: Project[] = [
 
 interface SocialLink {
   url: string
-  imageUrl: string
+  iconElement: ReactElement
   title: string
-  widthScale: number
 }
 const socialLinks: SocialLink[] = [
   {
     url: 'https://github.com/ledesmablt',
-    imageUrl: '/github.svg',
-    title: 'GitHub profile',
-    widthScale: 1
+    iconElement: <GitHub />,
+    title: 'GitHub profile'
   },
   {
     url: 'https://www.linkedin.com/in/benj-ledesma-581a65107/',
-    imageUrl: '/linkedin.svg',
-    title: 'LinkedIn profile',
-    widthScale: 1.2
+    iconElement: <LinkedIn />,
+    title: 'LinkedIn profile'
   }
 ]
 
@@ -225,14 +224,14 @@ const Home: NextPage = () => {
                         target='_blank'
                         rel='noreferrer'
                       >
-                        <img
-                          src={s.imageUrl}
-                          alt={s.title}
+                        <div
                           style={{
                             objectFit: 'contain',
-                            width: 24 * s.widthScale
+                            width: 24
                           }}
-                        />
+                        >
+                          {s.iconElement}
+                        </div>
                       </a>
                     ))}
                   </div>
