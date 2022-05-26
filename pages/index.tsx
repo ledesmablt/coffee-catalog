@@ -111,6 +111,10 @@ const ProfileImg = styled('img')({
   height: 160,
   borderRadius: '100%',
   paddingLeft: 4,
+  [mq[0]]: {
+    width: 180,
+    height: 180
+  },
   [mq[1]]: {
     width: 210,
     height: 210
