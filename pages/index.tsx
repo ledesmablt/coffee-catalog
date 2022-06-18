@@ -50,7 +50,7 @@ const socialLinks: SocialLink[] = [
     title: 'GitHub profile'
   },
   {
-    url: 'https://www.linkedin.com/in/benj-ledesma-581a65107/',
+    url: 'https://www.linkedin.com/in/ledesmablt',
     iconElement: <LinkedIn />,
     title: 'LinkedIn profile'
   }
