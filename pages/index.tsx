@@ -1,10 +1,12 @@
 import styled from '@emotion/styled'
+import dayjs from 'dayjs'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { ReactElement, useState } from 'react'
 import GitHub from '../components/svgs/GitHub'
 import LinkedIn from '../components/svgs/LinkedIn'
+import { getSpotifyTopTracks, SpotifyTrack } from '../utils/spotify'
 
 const mq = [440, 640, 900].map((bp) => `@media (min-width: ${bp}px)`)
 
@@ -144,6 +146,15 @@ const List = styled('ul')({
   }
 })
 
+const NumberedList = styled('ol')({
+  padding: 0,
+  paddingLeft: 20,
+  '& > li': {
+    marginTop: 4,
+    paddingLeft: 4
+  }
+})
+
 const SectionHeader = styled('h3')({
   marginTop: 0
 })
@@ -161,9 +172,36 @@ const BoxShowSmall = styled('div')({
   }
 })
 
+const Link = styled('a')({
+  textDecoration: 'none',
+  '&:hover': {
+    textDecoration: 'underline'
+  }
+})
+
 const BASE_URL = 'https://ledesmablt.com'
 
-const Home: NextPage = () => {
+interface Props {
+  topTracks?: SpotifyTrack[]
+  lastRefreshed?: string
+}
+
+export const getStaticProps = async (): Promise<{
+  props: Props
+  revalidate: number
+}> => {
+  const topTracks = await getSpotifyTopTracks()
+  const lastRefreshed = new Date().toISOString()
+  return {
+    props: {
+      topTracks,
+      lastRefreshed
+    },
+    revalidate: 10
+  }
+}
+
+const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
   const [projectIndex, setProjectIndex] = useState(0)
 
   const project = projects[projectIndex]
@@ -342,6 +380,34 @@ const Home: NextPage = () => {
           </Section>
 
           <Divider />
+
+          {topTracks?.length && (
+            <>
+              <Section>
+                <SectionHeader>{"i'm listening to"}</SectionHeader>
+                <NumberedList>
+                  {topTracks.map((track) => {
+                    return (
+                      <li key={`spotify-${track.uri}`}>
+                        <Link
+                          href={track.external_urls.spotify}
+                          target='_blank'
+                          rel='noreferrer'
+                        >
+                          {track.artists[0].name} - {track.name}
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </NumberedList>
+                <p style={{ fontStyle: 'italic', fontSize: 14 }}>
+                  (refreshed {dayjs(lastRefreshed).format('MM/DD')})
+                </p>
+              </Section>
+
+              <Divider />
+            </>
+          )}
 
           <Section style={{ display: 'flex', justifyContent: 'center' }}>
             <p style={{ margin: 0 }}>
