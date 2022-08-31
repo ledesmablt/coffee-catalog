@@ -197,7 +197,7 @@ export const getStaticProps = async (): Promise<{
       topTracks,
       lastRefreshed
     },
-    revalidate: 10
+    revalidate: 60
   }
 }
 
