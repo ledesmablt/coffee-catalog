@@ -197,7 +197,7 @@ export const getStaticProps = async (): Promise<{
       topTracks,
       lastRefreshed
     },
-    revalidate: 60
+    revalidate: 12 * 60 * 60
   }
 }
 
@@ -251,6 +251,7 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
 
                 <div
                   style={{
+                    marginTop: 30,
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 2
@@ -258,7 +259,6 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                 >
                   <div
                     style={{
-                      marginTop: 30,
                       display: 'flex',
                       alignItems: 'center',
                       gap: 8
@@ -362,6 +362,31 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
           <Divider />
 
           <Section>
+            <SectionHeader>about me</SectionHeader>
+            <List>
+              <li>
+                senior engineer @{' '}
+                <a href='https://dashlabs.ai' target='_blank' rel='noreferrer'>
+                  Dashlabs.ai
+                </a>{' '}
+                (YC W21)
+              </li>
+              <li>
+                co-founder of{' '}
+                <a
+                  href='https://slated.studio'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  slated.studio
+                </a>
+              </li>
+              <li>former music org president & frustrated jazz guitarist</li>
+              <li>enjoys tea, running, chess, and math rock</li>
+            </List>
+          </Section>
+
+          <Section>
             <SectionHeader>{"i'm comfortable with"}</SectionHeader>
             <List>
               {comfortableWith.map((s, index) => (
@@ -378,8 +403,6 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
               ))}
             </List>
           </Section>
-
-          <Divider />
 
           {topTracks?.length && (
             <>
@@ -400,14 +423,16 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                     )
                   })}
                 </NumberedList>
-                <p style={{ fontStyle: 'italic', fontSize: 14 }}>
+                {/*
+                  <p style={{ fontStyle: 'italic', fontSize: 14 }}>
                   (refreshed {dayjs(lastRefreshed).format('MM/DD')})
                 </p>
+              */}
               </Section>
-
-              <Divider />
             </>
           )}
+
+          <Divider />
 
           <Section style={{ display: 'flex', justifyContent: 'center' }}>
             <p style={{ margin: 0 }}>
