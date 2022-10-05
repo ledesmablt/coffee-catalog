@@ -384,6 +384,13 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
               <li>former music org president & frustrated jazz guitarist</li>
               <li>enjoys tea, running, chess, and math rock</li>
             </List>
+            <p>
+              (more on my{' '}
+              <a href={socialLinks[1].url} target='_blank' rel='noreferrer'>
+                LinkedIn profile
+              </a>
+              )
+            </p>
           </Section>
 
           <Section>
