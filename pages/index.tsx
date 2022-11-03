@@ -371,16 +371,6 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                 </a>{' '}
                 (YC W21)
               </li>
-              <li>
-                co-founder of{' '}
-                <a
-                  href='https://slated.studio'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  slated.studio
-                </a>
-              </li>
               <li>former music org president & frustrated jazz guitarist</li>
               <li>enjoys tea, running, chess, and math rock</li>
             </List>
