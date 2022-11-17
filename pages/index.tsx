@@ -58,6 +58,9 @@ const socialLinks: SocialLink[] = [
   }
 ]
 
+const resumeUrl =
+  'https://drive.google.com/file/d/1X_QoyyjmAr1KU2VqbRpnvIfh_fGEMd3F/view?usp=sharing'
+
 const comfortableWith = [
   'building typescript MERN apps',
   'graphQL client & server',
@@ -376,6 +379,10 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
             </List>
             <p>
               (more on my{' '}
+              <a href={resumeUrl} target='_blank' rel='noreferrer'>
+                resume
+              </a>
+              {' and '}
               <a href={socialLinks[1].url} target='_blank' rel='noreferrer'>
                 LinkedIn profile
               </a>
