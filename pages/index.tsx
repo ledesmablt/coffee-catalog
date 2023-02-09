@@ -374,8 +374,10 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                 </a>{' '}
                 (YC W21)
               </li>
+              <li>ex-Shopee PH automation lead</li>
+              <li>triathlete (WIP)</li>
               <li>former music org president & frustrated jazz guitarist</li>
-              <li>enjoys tea, running, chess, and math rock</li>
+              <li>enjoys tea, chess, math rock, k-pop, studying 日本語</li>
             </List>
             <p>
               (more on my{' '}
