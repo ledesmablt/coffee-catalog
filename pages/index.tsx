@@ -72,12 +72,14 @@ const comfortableWith = [
 ]
 
 const triedOut = [
+  'nuxt',
   'svelte(kit)',
   'tailwind',
   'integrating google APIs (drive, sheets)',
-  'payment gateways (PayMongo, PayMaya)',
-  'electronJS',
+  'payment gateways (Stripe, PayMongo, PayMaya)',
+  'ruby on rails',
   'golang basics',
+  'electronJS',
   'figma',
   'other stuff'
 ]
