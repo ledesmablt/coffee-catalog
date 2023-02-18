@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import dayjs from 'dayjs'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -219,7 +218,7 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
         <meta property='og:image' content={`${BASE_URL}/images/me.jpeg`} />
         <meta
           property='og:description'
-          content='i like building useful stuff.'
+          content='i like building useful things.'
         />
       </Head>
       <Wrapper>
@@ -250,7 +249,7 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                     {"hi, i'm"} <b>Benj Ledesma</b>.
                   </p>
                 </BoxShowSmall>
-                <p style={{ margin: 0 }}>i like building useful stuff.</p>
+                <p style={{ margin: 0 }}>i like building useful things.</p>
 
                 <div
                   style={{
@@ -367,17 +366,18 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
           <Section>
             <SectionHeader>about me</SectionHeader>
             <List>
+              <li>full-stack software engineer</li>
               <li>
-                senior engineer @{' '}
+                ex-
                 <a href='https://dashlabs.ai' target='_blank' rel='noreferrer'>
                   Dashlabs.ai
                 </a>{' '}
-                (YC W21)
+                (YC W21) senior engineer
               </li>
               <li>ex-Shopee PH automation lead</li>
               <li>triathlete (WIP)</li>
-              <li>former music org president & frustrated jazz guitarist</li>
-              <li>enjoys tea, chess, math rock, k-pop, studying 日本語</li>
+              <li>former music org president & jazz guitarist</li>
+              <li>enjoys tea, math rock, k-pop, studying 日本語</li>
             </List>
             <p>
               (more on my{' '}
@@ -429,11 +429,6 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                     )
                   })}
                 </NumberedList>
-                {/*
-                  <p style={{ fontStyle: 'italic', fontSize: 14 }}>
-                  (refreshed {dayjs(lastRefreshed).format('MM/DD')})
-                </p>
-              */}
               </Section>
             </>
           )}
