@@ -44,18 +44,17 @@ interface SocialLink {
   iconElement: ReactElement
   title: string
 }
-const socialLinks: SocialLink[] = [
-  {
-    url: 'https://github.com/ledesmablt',
-    iconElement: <GitHub />,
-    title: 'GitHub profile'
-  },
-  {
-    url: 'https://www.linkedin.com/in/ledesmablt',
-    iconElement: <LinkedIn />,
-    title: 'LinkedIn profile'
-  }
-]
+const gitHubSocialLink: SocialLink = {
+  url: 'https://github.com/ledesmablt',
+  iconElement: <GitHub />,
+  title: 'GitHub profile'
+}
+const linkedInSocialLink: SocialLink = {
+  url: 'https://www.linkedin.com/in/ledesmablt',
+  iconElement: <LinkedIn />,
+  title: 'LinkedIn profile'
+}
+const socialLinks: SocialLink[] = [gitHubSocialLink, linkedInSocialLink]
 
 const resumeUrl =
   'https://drive.google.com/file/d/1X_QoyyjmAr1KU2VqbRpnvIfh_fGEMd3F/view?usp=sharing'
@@ -135,6 +134,13 @@ const Container = styled('div')({
   marginBottom: 40,
   width: '90%',
   maxWidth: 'calc(640px * 0.9)'
+})
+
+const PageHeader = styled('div')({
+  width: '100%',
+  display: 'flex',
+  gap: 10,
+  marginBottom: 10
 })
 
 const Section = styled('div')({
@@ -218,6 +224,10 @@ const Link = styled('a')({
   }
 })
 
+const PageHeaderLink = styled('a')({
+  textDecoration: 'underline'
+})
+
 const BASE_URL = 'https://ledesmablt.com'
 
 interface Props {
@@ -260,6 +270,19 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
       </Head>
       <Wrapper>
         <Container>
+          <PageHeader>
+            <PageHeaderLink href='/'>home</PageHeaderLink>
+            <PageHeaderLink href='/blog' target='_blank' rel='noreferrer'>
+              blog
+            </PageHeaderLink>
+            <PageHeaderLink
+              href='mailto:benj.ledesma@gmail.com'
+              target='_blank'
+              rel='noreferrer'
+            >
+              contact
+            </PageHeaderLink>
+          </PageHeader>
           <Section>
             <div
               style={{
@@ -508,8 +531,8 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
               hit me up:{' '}
               <a
                 href='mailto:benj.ledesma@gmail.com'
-                target={'_blank'}
-                rel={'noreferrer'}
+                target='_blank'
+                rel='noreferrer'
               >
                 benj.ledesma@gmail.com
               </a>
