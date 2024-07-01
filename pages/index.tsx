@@ -1,119 +1,17 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { ReactElement, useState } from 'react'
-import GitHub from '../components/svgs/GitHub'
-import LinkedIn from '../components/svgs/LinkedIn'
+import Link from 'next/link'
+import { useState } from 'react'
+import {
+  socialLinks,
+  projects,
+  comfortableWith,
+  triedOut,
+  uses,
+  resumeUrl
+} from '../src/content'
 import { getSpotifyTopTracks, SpotifyTrack } from '../utils/spotify'
-
-interface Project {
-  imageUrl: string
-  title: string
-  description: string
-  moreInfoUrl?: string
-}
-const projects: Project[] = [
-  {
-    title: 'quickscope',
-    imageUrl: '/images/quickscope-demo.gif',
-    description:
-      'a chrome & firefox extension for your new tab. build & search custom lists quickly.',
-    moreInfoUrl: 'https://github.com/ledesmablt/quickscope'
-  },
-  {
-    title: 'spotify-cli',
-    imageUrl: '/images/spotify-cli-demo.gif',
-    description:
-      'control Spotify playback on any device through the command line.',
-    moreInfoUrl: 'https://github.com/ledesmablt/spotify-cli'
-  },
-  {
-    title: 'vim-run',
-    imageUrl: '/images/vim-run-demo.gif',
-    description:
-      'run, view, and manage UNIX shell commands with ease from your favorite code editor.',
-    moreInfoUrl: 'https://github.com/ledesmablt/vim-run'
-  }
-]
-
-interface SocialLink {
-  url: string
-  iconElement: ReactElement
-  title: string
-}
-const gitHubSocialLink: SocialLink = {
-  url: 'https://github.com/ledesmablt',
-  iconElement: <GitHub />,
-  title: 'GitHub profile'
-}
-const linkedInSocialLink: SocialLink = {
-  url: 'https://www.linkedin.com/in/ledesmablt',
-  iconElement: <LinkedIn />,
-  title: 'LinkedIn profile'
-}
-const socialLinks: SocialLink[] = [gitHubSocialLink, linkedInSocialLink]
-
-const resumeUrl =
-  'https://drive.google.com/file/d/1X_QoyyjmAr1KU2VqbRpnvIfh_fGEMd3F/view?usp=sharing'
-
-const comfortableWith = [
-  'building typescript MERN apps',
-  'graphQL client & server',
-  'react component libraries (MUI, Chakra)',
-  'building chrome & firefox extensions',
-  'python scripts & web scrapers',
-  'tailwind CSS',
-  'serverless hosting on GCP or AWS',
-  'SQL analytics'
-]
-
-const triedOut = [
-  'nuxt',
-  'svelte(kit)',
-  'tailwind',
-  'integrating google APIs (drive, sheets)',
-  'payment gateways (Stripe, PayMongo, PayMaya)',
-  'ruby on rails',
-  'golang basics',
-  'electronJS',
-  'figma',
-  'other stuff'
-]
-
-const uses: { url?: string; description: string; name: string }[] = [
-  {
-    name: 'MacBook Air M1, 2020 - 16GB RAM, 512GB SSD',
-    description: 'Lightweight, durable, and good enough to get the job done.'
-  },
-  {
-    name: 'Any 27" monitor',
-    description:
-      "The comfiest size for me. Any bigger and I'll have a lot of unused space, especially with dual monitors or ultrawides. Smaller sizes (even on just the MacBook) can work with smart window management."
-  },
-  {
-    name: 'NeoVim + tmux',
-    url: 'https://github.com/ledesmablt/dotfiles',
-    description:
-      "Thanks to these guys, I often only need 2 windows to work - my terminal and my browser. I'm only ever looking at one workspace at a time (great for focus), but switching to another project / repo or spinning up a background job can be done with only a few keystrokes."
-  },
-  {
-    name: 'Notion',
-    url: 'https://www.notion.so/',
-    description:
-      'Everything I need for project management, studying, note-taking, and so on. I love that the interface is mostly a clean black & white, putting full emphasis on the content itself and not the surrounding UI. And of course, the keyboard shortcuts are amazing.'
-  },
-  {
-    name: 'Google Calendar',
-    description:
-      "Pretty much anything that happens in my life gets calendared - meetings, workouts, chores, hangouts. Tasks always have a due date, whether it's next week or in 6 months. This helps remind me to do things, assess task urgency off the bat, and give quick answers regarding my availability."
-  },
-  {
-    name: 'Sennheiser MTW3',
-    url: 'https://www.sennheiser-hearing.com/en-US/p/momentum-true-wireless-3/',
-    description:
-      "The noise cancellation isn't as good as Sony's WF-1000XM4, but the sound quality is superb - as if you're wearing over-ear headphones. I may not make music as often anymore, but I sure love listening to it."
-  }
-]
 
 const Divider = () => <div className='w-20 border-t-zinc-400 border-t my-4' />
 
@@ -160,17 +58,17 @@ const Home: NextPage = ({ topTracks }: Props) => {
       <main className='flex flex-col items-center leading-tight'>
         <div className='flex flex-col items-center gap-5 my-10 w-[90%] max-w-[576px]'>
           <section className='w-full flex gap-2 mb-2'>
-            <a className='underline' href='/'>
+            <Link className='underline' href='/'>
               home
-            </a>
-            <a
+            </Link>
+            <Link
               className='underline'
               href='/blog'
               target='_blank'
               rel='noreferrer'
             >
               blog
-            </a>
+            </Link>
             <a
               className='underline'
               href='mailto:benj.ledesma@gmail.com'
