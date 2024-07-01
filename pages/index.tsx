@@ -1,4 +1,3 @@
-import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -6,8 +5,6 @@ import { ReactElement, useState } from 'react'
 import GitHub from '../components/svgs/GitHub'
 import LinkedIn from '../components/svgs/LinkedIn'
 import { getSpotifyTopTracks, SpotifyTrack } from '../utils/spotify'
-
-const mq = [440, 640, 900].map((bp) => `@media (min-width: ${bp}px)`)
 
 interface Project {
   imageUrl: string
@@ -118,115 +115,7 @@ const uses: { url?: string; description: string; name: string }[] = [
   }
 ]
 
-const Wrapper = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  color: '#22292f'
-})
-
-const Container = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: 20,
-  marginTop: 40,
-  marginBottom: 40,
-  width: '90%',
-  maxWidth: 'calc(640px * 0.9)'
-})
-
-const PageHeader = styled('div')({
-  width: '100%',
-  display: 'flex',
-  gap: 10,
-  marginBottom: 10
-})
-
-const Section = styled('div')({
-  width: '100%'
-})
-
-const Divider = styled('div')({
-  width: 80,
-  borderTop: '1px solid grey',
-  margin: 20
-})
-
-const ProfileImg = styled('img')({
-  width: 160,
-  height: 160,
-  borderRadius: '100%',
-  paddingLeft: 4,
-  [mq[0]]: {
-    width: 180,
-    height: 180
-  },
-  [mq[1]]: {
-    width: 210,
-    height: 210
-  }
-})
-
-const ProjectImg = styled('div')({
-  position: 'relative',
-  background: '#e6e6e6',
-  height: 280,
-  [mq[1]]: {
-    height: 380
-  }
-})
-
-const List = styled('ul')({
-  listStyleType: 'none',
-  padding: 0,
-  paddingLeft: 20,
-  '& > li': {
-    marginTop: 4
-  },
-  '& > li:before': {
-    content: '"-"',
-    position: 'absolute',
-    marginLeft: -20
-  }
-})
-
-const NumberedList = styled('ol')({
-  padding: 0,
-  paddingLeft: 20,
-  '& > li': {
-    marginTop: 4,
-    paddingLeft: 4
-  }
-})
-
-const SectionHeader = styled('h3')({
-  marginTop: 0
-})
-
-const BoxHideSmall = styled('div')({
-  display: 'none',
-  [mq[0]]: {
-    display: 'inherit'
-  }
-})
-
-const BoxShowSmall = styled('div')({
-  [mq[0]]: {
-    display: 'none'
-  }
-})
-
-const Link = styled('a')({
-  textDecoration: 'none',
-  '&:hover': {
-    textDecoration: 'underline'
-  }
-})
-
-const PageHeaderLink = styled('a')({
-  textDecoration: 'underline'
-})
+const Divider = () => <div className='w-20 border-t-zinc-400 border-t my-4' />
 
 const BASE_URL = 'https://ledesmablt.com'
 
@@ -250,7 +139,7 @@ export const getStaticProps = async (): Promise<{
   }
 }
 
-const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
+const Home: NextPage = ({ topTracks }: Props) => {
   const [projectIndex, setProjectIndex] = useState(0)
 
   const project = projects[projectIndex]
@@ -268,64 +157,48 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
           content='i like building useful things.'
         />
       </Head>
-      <Wrapper>
-        <Container>
-          <PageHeader>
-            <PageHeaderLink href='/'>home</PageHeaderLink>
-            <PageHeaderLink href='/blog' target='_blank' rel='noreferrer'>
+      <main className='flex flex-col items-center leading-tight'>
+        <div className='flex flex-col items-center gap-5 my-10 w-[90%] max-w-[576px]'>
+          <section className='w-full flex gap-2 mb-2'>
+            <a className='underline' href='/'>
+              home
+            </a>
+            <a
+              className='underline'
+              href='/blog'
+              target='_blank'
+              rel='noreferrer'
+            >
               blog
-            </PageHeaderLink>
-            <PageHeaderLink
+            </a>
+            <a
+              className='underline'
               href='mailto:benj.ledesma@gmail.com'
               target='_blank'
               rel='noreferrer'
             >
               contact
-            </PageHeaderLink>
-          </PageHeader>
-          <Section>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div>
-                <BoxHideSmall>
-                  <p style={{ margin: 0, marginLeft: 1 }}>{"hi, i'm"}</p>
-                  <h1 style={{ margin: 0, marginTop: 2, marginBottom: 18 }}>
+            </a>
+          </section>
+
+          <section>
+            <div className='flex flex-center justify-between'>
+              <div className='leading-none mt-4'>
+                <div className='hidden sm:inline'>
+                  <p className='ml-[1px]'>{"hi, i'm"}</p>
+                  <h1 className='mt-0.5 mb-[18px] text-3xl font-bold'>
                     Benj Ledesma
                   </h1>
-                </BoxHideSmall>
-                <BoxShowSmall>
-                  <p
-                    style={{
-                      margin: 0,
-                      marginLeft: 1,
-                      marginBottom: 10
-                    }}
-                  >
-                    {"hi, i'm"} <b>Benj Ledesma</b>.
+                </div>
+                <div className='xs:hidden'>
+                  <p className='ml-[1px] mb-2.5'>
+                    {"hi, i'm"} <b className='font-bold'>Benj Ledesma</b>.
                   </p>
-                </BoxShowSmall>
-                <p style={{ margin: 0 }}>i like building useful things.</p>
+                </div>
+                <p>i like building useful things.</p>
 
-                <div
-                  style={{
-                    marginTop: 30,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 2
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 8
-                    }}
-                  >
+                <div className='mt-[30px] flex flex-col gap-[2px]'>
+                  <div className='flex items-center gap-2'>
                     {socialLinks.map((s) => (
                       <a
                         key={`s-${s.title}`}
@@ -333,45 +206,37 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                         target='_blank'
                         rel='noreferrer'
                       >
-                        <div
-                          style={{
-                            objectFit: 'contain',
-                            width: 24
-                          }}
-                        >
+                        <div className='object-contain w-6'>
                           {s.iconElement}
                         </div>
                       </a>
                     ))}
                   </div>
-                  <code
-                    style={{
-                      fontFamily: 'Hack',
-                      fontSize: 12
-                    }}
-                  >
-                    @ledesmablt
-                  </code>
+                  <code className='font-mono text-xs mt-1'>@ledesmablt</code>
                 </div>
               </div>
-              <ProfileImg src='/images/me.jpeg' alt='me' />
+              <img
+                src='/images/me.jpeg'
+                alt='me'
+                className='w-40 h-40 rounded-full sm:w-[180px] sm:h-[180px] md:w-[210px] md:h-[210px]'
+              />
             </div>
-          </Section>
+          </section>
 
           <Divider />
 
-          <Section style={{ justifyContent: 'space-between' }}>
-            <SectionHeader>some personal projects</SectionHeader>
+          <section>
+            <h3>some personal projects</h3>
             <div>
-              <ProjectImg>
+              <div className='relative bg-zinc-200 h-[280px] md:h-[380px]'>
                 <Image
                   src={project.imageUrl}
                   alt={`Project preview: ${project.title}`}
                   layout={'fill'}
                   objectFit={'contain'}
                 />
-              </ProjectImg>
-              <p>
+              </div>
+              <p className='mt-4'>
                 <b>{project.title}</b>: {project.description}{' '}
                 {project.moreInfoUrl && (
                   <a
@@ -419,13 +284,13 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                 next
               </a>
             </div>
-          </Section>
+          </section>
 
           <Divider />
 
-          <Section>
-            <SectionHeader>about me</SectionHeader>
-            <List>
+          <section>
+            <h3>about me</h3>
+            <ul>
               <li>full-stack software engineer</li>
               <li>
                 ex-
@@ -438,46 +303,61 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
               <li>triathlete (WIP)</li>
               <li>former music org president & jazz guitarist</li>
               <li>enjoys tea, math rock, k-pop, studying 日本語</li>
-            </List>
-            <p>
+            </ul>
+            <p className='mt-4'>
               (more on my{' '}
-              <a href={resumeUrl} target='_blank' rel='noreferrer'>
+              <a
+                className='underline'
+                href={resumeUrl}
+                target='_blank'
+                rel='noreferrer'
+              >
                 resume
               </a>
               {' and '}
-              <a href={socialLinks[1].url} target='_blank' rel='noreferrer'>
+              <a
+                className='underline'
+                href={socialLinks[1].url}
+                target='_blank'
+                rel='noreferrer'
+              >
                 LinkedIn profile
               </a>
               )
             </p>
-          </Section>
+          </section>
 
-          <Section>
-            <SectionHeader>{"i'm comfortable with"}</SectionHeader>
-            <List>
+          <section>
+            <h3>{"i'm comfortable with"}</h3>
+            <ul>
               {comfortableWith.map((s, index) => (
                 <li key={`cw-${index}`}>{s}</li>
               ))}
-            </List>
-          </Section>
+            </ul>
+          </section>
 
-          <Section>
-            <SectionHeader>{"i've tried out"}</SectionHeader>
-            <List>
+          <section>
+            <h3>{"i've tried out"}</h3>
+            <ul>
               {triedOut.map((s, index) => (
                 <li key={`to-${index}`}>{s}</li>
               ))}
-            </List>
-          </Section>
+            </ul>
+          </section>
 
-          <Section>
-            <SectionHeader>{'i use'}</SectionHeader>
-            <List>
+          <section>
+            <h3>{'i use'}</h3>
+            <ul>
               {uses.map(({ name, url, description }, index) => (
                 <li key={`uses-${index}`}>
                   <div>
                     {url ? (
-                      <a href={url} target='_blank' rel='noreferrer'>
+                      <a
+                        className='underline'
+                        href={url}
+                        target='_blank'
+                        rel='noreferrer'
+                      >
                         {name}
                       </a>
                     ) : (
@@ -498,38 +378,38 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                   )}
                 </li>
               ))}
-            </List>
-          </Section>
+            </ul>
+          </section>
 
           {topTracks?.length && (
-            <>
-              <Section>
-                <SectionHeader>{"i'm listening to"}</SectionHeader>
-                <NumberedList>
-                  {topTracks.map((track) => {
-                    return (
-                      <li key={`spotify-${track.uri}`}>
-                        <Link
-                          href={track.external_urls.spotify}
-                          target='_blank'
-                          rel='noreferrer'
-                        >
-                          {track.artists[0].name} - {track.name}
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </NumberedList>
-              </Section>
-            </>
+            <section>
+              <h3>{"i'm listening to"}</h3>
+              <ol className='list-decimal list-outside leading-normal p-0 pl-5'>
+                {topTracks.map((track) => {
+                  return (
+                    <li className='pl-2' key={`spotify-${track.uri}`}>
+                      <a
+                        className='no-underline hover:underline'
+                        href={track.external_urls.spotify}
+                        target='_blank'
+                        rel='noreferrer'
+                      >
+                        {track.artists[0].name} - {track.name}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ol>
+            </section>
           )}
 
           <Divider />
 
-          <Section style={{ display: 'flex', justifyContent: 'center' }}>
-            <p style={{ margin: 0 }}>
+          <section className='flex justify-center'>
+            <p>
               hit me up:{' '}
               <a
+                className='underline'
                 href='mailto:benj.ledesma@gmail.com'
                 target='_blank'
                 rel='noreferrer'
@@ -537,9 +417,9 @@ const Home: NextPage = ({ topTracks, lastRefreshed }: Props) => {
                 benj.ledesma@gmail.com
               </a>
             </p>
-          </Section>
-        </Container>
-      </Wrapper>
+          </section>
+        </div>
+      </main>
     </>
   )
 }
