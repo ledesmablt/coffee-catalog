@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -14,8 +13,6 @@ import {
 import { getSpotifyTopTracks, SpotifyTrack } from '../utils/spotify'
 
 const Divider = () => <div className='w-20 border-t-zinc-400 border-t my-4' />
-
-const BASE_URL = 'https://ledesmablt.com'
 
 interface Props {
   topTracks?: SpotifyTrack[]
@@ -37,24 +34,13 @@ export const getStaticProps = async (): Promise<{
   }
 }
 
-const Home: NextPage = ({ topTracks }: Props) => {
+const HomePage: NextPage = ({ topTracks }: Props) => {
   const [projectIndex, setProjectIndex] = useState(0)
 
   const project = projects[projectIndex]
 
   return (
     <>
-      <Head>
-        <title>Benj Ledesma</title>
-        <meta property='og:url' content={BASE_URL} />
-        <meta property='og:type' content='website' />
-        <meta property='og:title' content='Benj Ledesma' />
-        <meta property='og:image' content={`${BASE_URL}/images/me.jpeg`} />
-        <meta
-          property='og:description'
-          content='i like building useful things.'
-        />
-      </Head>
       <main className='flex flex-col items-center leading-tight'>
         <div className='flex flex-col items-center gap-5 my-10 w-[90%] max-w-[576px]'>
           <section className='w-full flex gap-2 mb-2'>
@@ -322,4 +308,4 @@ const Home: NextPage = ({ topTracks }: Props) => {
   )
 }
 
-export default Home
+export default HomePage

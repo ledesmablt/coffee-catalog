@@ -19,6 +19,10 @@ module.exports = {
         dashed: {
           content: '"-"'
         }
+      },
+      fontFamily: {
+        serif: ['"Source Serif 4"', 'ui-serif'],
+        mono: ['Hack', 'ui-monospace']
       }
     }
   },
