@@ -16,22 +16,22 @@ export const projects: Project[] = [
     imageUrl: '/images/quickscope-demo.gif',
     description:
       'a chrome & firefox extension for your new tab. build & search custom lists quickly.',
-    moreInfoUrl: 'https://github.com/ledesmablt/quickscope'
+    moreInfoUrl: 'https://github.com/ledesmablt/quickscope',
   },
   {
     title: 'spotify-cli',
     imageUrl: '/images/spotify-cli-demo.gif',
     description:
       'control Spotify playback on any device through the command line.',
-    moreInfoUrl: 'https://github.com/ledesmablt/spotify-cli'
+    moreInfoUrl: 'https://github.com/ledesmablt/spotify-cli',
   },
   {
     title: 'vim-run',
     imageUrl: '/images/vim-run-demo.gif',
     description:
       'run, view, and manage UNIX shell commands with ease from your favorite code editor.',
-    moreInfoUrl: 'https://github.com/ledesmablt/vim-run'
-  }
+    moreInfoUrl: 'https://github.com/ledesmablt/vim-run',
+  },
 ]
 
 export const Projects = () => {
@@ -64,7 +64,7 @@ export const Projects = () => {
           display: 'flex',
           gap: 48,
           justifyContent: 'center',
-          marginTop: 30
+          marginTop: 30,
         }}
       >
         <a

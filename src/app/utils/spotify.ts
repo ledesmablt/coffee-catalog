@@ -4,7 +4,7 @@ const {
   SPOTIFY_REFRESH_TOKEN = '',
   SPOTIFY_REDIRECT_URL = '',
   SPOTIFY_CLIENT_ID = '',
-  SPOTIFY_CLIENT_SECRET = ''
+  SPOTIFY_CLIENT_SECRET = '',
 } = process.env
 
 interface ExternalURLs {
@@ -33,11 +33,11 @@ export const getSpotifyTopTracks = async (): Promise<SpotifyTrack[]> => {
   const res = await axios.get('https://api.spotify.com/v1/me/top/tracks', {
     params: {
       time_range: 'short_term',
-      limit: 10
+      limit: 10,
     },
     headers: {
-      Authorization: `Bearer ${await getAccessToken()}`
-    }
+      Authorization: `Bearer ${await getAccessToken()}`,
+    },
   })
   return res.data?.items || []
 }
@@ -46,8 +46,8 @@ export const getSpotifyPlaybackState =
   async (): Promise<SpotifyPlaybackState> => {
     const res = await axios.get('https://api.spotify.com/v1/me/player', {
       headers: {
-        Authorization: `Bearer ${await getAccessToken()}`
-      }
+        Authorization: `Bearer ${await getAccessToken()}`,
+      },
     })
 
     return res.data
@@ -65,9 +65,9 @@ const getAccessToken = async () => {
     {
       auth: {
         username: SPOTIFY_CLIENT_ID,
-        password: SPOTIFY_CLIENT_SECRET
-      }
-    }
+        password: SPOTIFY_CLIENT_SECRET,
+      },
+    },
   )
   return authRes.data.access_token
 }

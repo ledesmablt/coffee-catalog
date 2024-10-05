@@ -5,7 +5,7 @@ import { Footer } from './footer'
 export const metadata: Metadata = {
   title: 'Casa Ledesma',
   description: 'Welcome to Casa Ledesma',
-  openGraph: {}
+  openGraph: {},
 }
 
 const CasaPage = async () => {

@@ -4,7 +4,7 @@ import {
   comfortableWith,
   triedOut,
   uses,
-  resumeUrl
+  resumeUrl,
 } from './content'
 import { Projects } from './projects'
 import { getSpotifyTopTracks } from './utils/spotify'
@@ -175,7 +175,7 @@ const HomePage = async () => {
                         lineHeight: 1.4,
                         color: '#3d4852',
                         marginTop: 6,
-                        marginBottom: 24
+                        marginBottom: 24,
                       }}
                     >
                       {description}

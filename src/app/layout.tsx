@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   openGraph: {
     url: BASE_URL,
     title: 'Benj Ledesma',
-    images: `${BASE_URL}/images/me.jpeg`
-  }
+    images: `${BASE_URL}/images/me.jpeg`,
+  },
 }
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
