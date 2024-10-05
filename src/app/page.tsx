@@ -1,60 +1,23 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
 import {
   socialLinks,
-  projects,
   comfortableWith,
   triedOut,
   uses,
-  resumeUrl
-} from '../src/content'
-import { getSpotifyTopTracks, SpotifyTrack } from '../utils/spotify'
+  resumeUrl,
+} from './content'
+import { Projects } from './projects'
+import { getSpotifyTopTracks } from './utils/spotify'
 
 const Divider = () => <div className='w-20 border-t-zinc-400 border-t my-4' />
 
-const BASE_URL = 'https://ledesmablt.com'
+// revalidate every 12 hrs (12 * 60 * 60)
+export const revalidate = 43200
 
-interface Props {
-  topTracks?: SpotifyTrack[]
-  lastRefreshed?: string
-}
-
-export const getStaticProps = async (): Promise<{
-  props: Props
-  revalidate: number
-}> => {
+const HomePage = async () => {
   const topTracks = await getSpotifyTopTracks()
-  const lastRefreshed = new Date().toISOString()
-  return {
-    props: {
-      topTracks,
-      lastRefreshed
-    },
-    revalidate: 12 * 60 * 60
-  }
-}
-
-const Home: NextPage = ({ topTracks }: Props) => {
-  const [projectIndex, setProjectIndex] = useState(0)
-
-  const project = projects[projectIndex]
-
   return (
     <>
-      <Head>
-        <title>Benj Ledesma</title>
-        <meta property='og:url' content={BASE_URL} />
-        <meta property='og:type' content='website' />
-        <meta property='og:title' content='Benj Ledesma' />
-        <meta property='og:image' content={`${BASE_URL}/images/me.jpeg`} />
-        <meta
-          property='og:description'
-          content='i like building useful things.'
-        />
-      </Head>
       <main className='flex flex-col items-center leading-tight'>
         <div className='flex flex-col items-center gap-5 my-10 w-[90%] max-w-[576px]'>
           <section className='w-full flex gap-2 mb-2'>
@@ -125,63 +88,7 @@ const Home: NextPage = ({ topTracks }: Props) => {
 
           <section>
             <h3>some personal projects</h3>
-            <div>
-              <div className='relative bg-zinc-200 h-[280px] md:h-[380px]'>
-                <Image
-                  src={project.imageUrl}
-                  alt={`Project preview: ${project.title}`}
-                  layout={'fill'}
-                  objectFit={'contain'}
-                />
-              </div>
-              <p className='mt-4'>
-                <b>{project.title}</b>: {project.description}{' '}
-                {project.moreInfoUrl && (
-                  <a
-                    href={project.moreInfoUrl}
-                    target={'_blank'}
-                    rel={'noreferrer'}
-                  >
-                    more info
-                  </a>
-                )}
-              </p>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                gap: 48,
-                justifyContent: 'center',
-                marginTop: 30
-              }}
-            >
-              <a
-                href='#'
-                onClick={(e) => {
-                  e.preventDefault()
-                  if (projectIndex <= 0) {
-                    setProjectIndex(projects.length - 1)
-                  } else {
-                    setProjectIndex(projectIndex - 1)
-                  }
-                }}
-              >
-                back
-              </a>
-              <a
-                href='#'
-                onClick={(e) => {
-                  e.preventDefault()
-                  if (projectIndex >= projects.length - 1) {
-                    setProjectIndex(0)
-                  } else {
-                    setProjectIndex(projectIndex + 1)
-                  }
-                }}
-              >
-                next
-              </a>
-            </div>
+            <Projects />
           </section>
 
           <Divider />
@@ -268,7 +175,7 @@ const Home: NextPage = ({ topTracks }: Props) => {
                         lineHeight: 1.4,
                         color: '#3d4852',
                         marginTop: 6,
-                        marginBottom: 24
+                        marginBottom: 24,
                       }}
                     >
                       {description}
@@ -322,4 +229,4 @@ const Home: NextPage = ({ topTracks }: Props) => {
   )
 }
 
-export default Home
+export default HomePage
