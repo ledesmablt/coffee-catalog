@@ -1,5 +1,6 @@
-import type { Metadata, NextPage } from 'next'
-import { CasaContent } from './content'
+import type { Metadata } from 'next'
+import { Content } from './content'
+import { Footer } from './footer'
 
 export const metadata: Metadata = {
   title: 'Casa Ledesma',
@@ -7,11 +8,12 @@ export const metadata: Metadata = {
   openGraph: {}
 }
 
-const CasaPage: NextPage = () => {
+const CasaPage = async () => {
   return (
-    <>
-      <CasaContent />
-    </>
+    <main className='flex flex-col items-center font-serif min-h-screen'>
+      <Content />
+      <Footer />
+    </main>
   )
 }
 
