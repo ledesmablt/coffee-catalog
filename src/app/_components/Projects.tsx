@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 interface Project {
   imageUrl: string
@@ -14,32 +14,30 @@ export const projects: Project[] = [
   {
     title: 'quickscope',
     imageUrl: '/images/quickscope-demo.gif',
-    description:
-      'a chrome & firefox extension for your new tab. build & search custom lists quickly.',
+    description: 'a chrome & firefox extension for your new tab. build & search custom lists quickly.',
     moreInfoUrl: 'https://github.com/ledesmablt/quickscope',
   },
   {
     title: 'spotify-cli',
     imageUrl: '/images/spotify-cli-demo.gif',
-    description:
-      'control Spotify playback on any device through the command line.',
+    description: 'control Spotify playback on any device through the command line.',
     moreInfoUrl: 'https://github.com/ledesmablt/spotify-cli',
   },
   {
     title: 'vim-run',
     imageUrl: '/images/vim-run-demo.gif',
-    description:
-      'run, view, and manage UNIX shell commands with ease from your favorite code editor.',
+    description: 'run, view, and manage UNIX shell commands with ease from your favorite code editor.',
     moreInfoUrl: 'https://github.com/ledesmablt/vim-run',
   },
 ]
 
 export const Projects = () => {
   const [projectIndex, setProjectIndex] = useState(0)
-
   const project = projects[projectIndex]
+
   return (
-    <>
+    <section>
+      <h3>some personal projects</h3>
       <div>
         <div className='relative bg-zinc-200 h-[280px] md:h-[380px]'>
           <Image
@@ -94,6 +92,6 @@ export const Projects = () => {
           next
         </a>
       </div>
-    </>
+    </section>
   )
 }

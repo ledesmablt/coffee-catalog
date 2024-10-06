@@ -1,16 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-export const FooterPassword = () => {
+export const Password = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <div
-      id='wifi-password'
-      className='text-center min-h-[48px]'
-      onClick={() => setShowPassword(!showPassword)}
-    >
+    <div id='wifi-password' className='text-center min-h-[48px]' onClick={() => setShowPassword(!showPassword)}>
       {showPassword ? (
         <>
           <p>SSID: GlobeAtHome_0F800_5</p>

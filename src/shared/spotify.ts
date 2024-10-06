@@ -42,16 +42,15 @@ export const getSpotifyTopTracks = async (): Promise<SpotifyTrack[]> => {
   return res.data?.items || []
 }
 
-export const getSpotifyPlaybackState =
-  async (): Promise<SpotifyPlaybackState> => {
-    const res = await axios.get('https://api.spotify.com/v1/me/player', {
-      headers: {
-        Authorization: `Bearer ${await getAccessToken()}`,
-      },
-    })
+export const getSpotifyPlaybackState = async (): Promise<SpotifyPlaybackState> => {
+  const res = await axios.get('https://api.spotify.com/v1/me/player', {
+    headers: {
+      Authorization: `Bearer ${await getAccessToken()}`,
+    },
+  })
 
-    return res.data
-  }
+  return res.data
+}
 
 const getAccessToken = async () => {
   const params = new URLSearchParams()
@@ -59,15 +58,11 @@ const getAccessToken = async () => {
   params.append('refresh_token', SPOTIFY_REFRESH_TOKEN)
   params.append('redirect_uri', SPOTIFY_REDIRECT_URL)
 
-  const authRes = await axios.post(
-    'https://accounts.spotify.com/api/token',
-    params,
-    {
-      auth: {
-        username: SPOTIFY_CLIENT_ID,
-        password: SPOTIFY_CLIENT_SECRET,
-      },
+  const authRes = await axios.post('https://accounts.spotify.com/api/token', params, {
+    auth: {
+      username: SPOTIFY_CLIENT_ID,
+      password: SPOTIFY_CLIENT_SECRET,
     },
-  )
+  })
   return authRes.data.access_token
 }
