@@ -1,8 +1,11 @@
-import { getSpotifyPlaybackState } from '../../utils/spotify'
+import type { SpotifyPlaybackState } from '../../utils/spotify'
 import { FooterPassword } from './password'
 
-export const Footer = async () => {
-  const playbackState = await getSpotifyPlaybackState()
+interface Props {
+  playbackState?: SpotifyPlaybackState
+}
+
+export const Footer = ({ playbackState }: Props) => {
   const track = playbackState?.item
   const context = playbackState?.context
 
