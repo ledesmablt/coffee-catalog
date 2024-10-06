@@ -9,6 +9,17 @@ export const Footer = ({ playbackState }: Props) => {
   const track = playbackState?.item
   const context = playbackState?.context
 
+  const getNowPlayingUrl = () => {
+    const likedSongsUrl = 'https://api.spotify.com/v1/me/tracks'
+    const contextUrl = context?.external_urls.spotify
+    const contextIsPrivate = contextUrl === likedSongsUrl
+    if (!contextUrl || contextIsPrivate) {
+      return track?.external_urls.spotify
+    }
+
+    return contextUrl
+  }
+
   return (
     <footer
       id='footer'
@@ -17,7 +28,7 @@ export const Footer = ({ playbackState }: Props) => {
       {track && playbackState?.is_playing && (
         <a
           className='no-underline hover:underline'
-          href={context?.external_urls.spotify || track.external_urls.spotify}
+          href={getNowPlayingUrl()}
           target='_blank'
           rel='noreferrer'
         >
