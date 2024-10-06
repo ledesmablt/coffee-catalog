@@ -23,8 +23,7 @@ const linkedInSocialLink: SocialLink = {
 }
 export const socialLinks: SocialLink[] = [gitHubSocialLink, linkedInSocialLink]
 
-export const resumeUrl =
-  'https://drive.google.com/file/d/1X_QoyyjmAr1KU2VqbRpnvIfh_fGEMd3F/view?usp=sharing'
+export const resumeUrl = 'https://drive.google.com/file/d/1X_QoyyjmAr1KU2VqbRpnvIfh_fGEMd3F/view?usp=sharing'
 
 export const comfortableWith = [
   'building typescript MERN apps',
@@ -99,9 +98,7 @@ export const Content = ({ topTracks }: Props) => {
           <div className='leading-none mt-4'>
             <div className='hidden sm:inline'>
               <p className='ml-[1px]'>{"hi, i'm"}</p>
-              <h1 className='mt-0.5 mb-[18px] text-3xl font-bold'>
-                Benj Ledesma
-              </h1>
+              <h1 className='mt-0.5 mb-[18px] text-3xl font-bold'>Benj Ledesma</h1>
             </div>
             <div className='xs:hidden'>
               <p className='ml-[1px] mb-2.5'>
@@ -113,12 +110,7 @@ export const Content = ({ topTracks }: Props) => {
             <div className='mt-[30px] flex flex-col gap-[2px]'>
               <div className='flex items-center gap-2'>
                 {socialLinks.map((s) => (
-                  <a
-                    key={`s-${s.title}`}
-                    href={s.url}
-                    target='_blank'
-                    rel='noreferrer'
-                  >
+                  <a key={`s-${s.title}`} href={s.url} target='_blank' rel='noreferrer'>
                     <div className='object-contain w-6'>{s.iconElement}</div>
                   </a>
                 ))}
@@ -158,21 +150,11 @@ export const Content = ({ topTracks }: Props) => {
         </ul>
         <p className='mt-4'>
           (more on my{' '}
-          <a
-            className='underline'
-            href={resumeUrl}
-            target='_blank'
-            rel='noreferrer'
-          >
+          <a className='underline' href={resumeUrl} target='_blank' rel='noreferrer'>
             resume
           </a>
           {' and '}
-          <a
-            className='underline'
-            href={socialLinks[1].url}
-            target='_blank'
-            rel='noreferrer'
-          >
+          <a className='underline' href={socialLinks[1].url} target='_blank' rel='noreferrer'>
             LinkedIn profile
           </a>
           )
@@ -204,12 +186,7 @@ export const Content = ({ topTracks }: Props) => {
             <li key={`uses-${index}`}>
               <div>
                 {url ? (
-                  <a
-                    className='underline'
-                    href={url}
-                    target='_blank'
-                    rel='noreferrer'
-                  >
+                  <a className='underline' href={url} target='_blank' rel='noreferrer'>
                     {name}
                   </a>
                 ) : (
@@ -260,12 +237,7 @@ export const Content = ({ topTracks }: Props) => {
       <section className='flex justify-center'>
         <p>
           hit me up:{' '}
-          <a
-            className='underline'
-            href='mailto:benj.ledesma@gmail.com'
-            target='_blank'
-            rel='noreferrer'
-          >
+          <a className='underline' href='mailto:benj.ledesma@gmail.com' target='_blank' rel='noreferrer'>
             benj.ledesma@gmail.com
           </a>
         </p>

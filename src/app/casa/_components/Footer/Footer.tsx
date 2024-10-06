@@ -22,17 +22,9 @@ export const Footer = ({ playbackState }: Props) => {
   }
 
   return (
-    <footer
-      id='footer'
-      className='flex flex-col items-center gap-2 text-sm mt-auto mb-8'
-    >
+    <footer id='footer' className='flex flex-col items-center gap-2 text-sm mt-auto mb-8'>
       {track && playbackState?.is_playing && (
-        <a
-          className='no-underline hover:underline'
-          href={getNowPlayingUrl()}
-          target='_blank'
-          rel='noreferrer'
-        >
+        <a className='no-underline hover:underline' href={getNowPlayingUrl()} target='_blank' rel='noreferrer'>
           ♫ {track.artists[0].name} - {track.name}
         </a>
       )}

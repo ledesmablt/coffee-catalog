@@ -4,8 +4,7 @@ const nextConfig = {
   redirects: async () => [
     {
       source: '/blog',
-      destination:
-        'https://ledesmablt.notion.site/b79ce94d7b22490c9aa3deac39837096',
+      destination: 'https://ledesmablt.notion.site/b79ce94d7b22490c9aa3deac39837096',
       permanent: false,
     },
   ],

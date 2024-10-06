@@ -11,12 +11,7 @@ export const Nav = () => {
       <Link className='underline' href='/blog' target='_blank' rel='noreferrer'>
         blog
       </Link>
-      <a
-        className='underline'
-        href='mailto:benj.ledesma@gmail.com'
-        target='_blank'
-        rel='noreferrer'
-      >
+      <a className='underline' href='mailto:benj.ledesma@gmail.com' target='_blank' rel='noreferrer'>
         contact
       </a>
     </section>
