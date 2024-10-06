@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-export const FooterPassword = () => {
+export const Password = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (

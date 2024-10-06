@@ -1,6 +1,4 @@
-import React, { ReactElement } from 'react'
-
-const LinkedIn = (): ReactElement => {
+export const LinkedIn = () => {
   return (
     <svg
       fill='#000000'
@@ -13,4 +11,3 @@ const LinkedIn = (): ReactElement => {
     </svg>
   )
 }
-export default LinkedIn

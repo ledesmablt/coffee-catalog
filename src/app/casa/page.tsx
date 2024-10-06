@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { Content } from './content'
-import { Footer } from './footer'
+import { Content } from './_components/Content'
+import { Footer } from './_components/Footer'
 
-import { getSpotifyPlaybackState } from '../utils/spotify'
+import { getSpotifyPlaybackState } from '@/shared/spotify'
 
 export const metadata: Metadata = {
   title: 'Casa Ledesma',

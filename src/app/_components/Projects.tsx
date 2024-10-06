@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 interface Project {
   imageUrl: string
@@ -36,10 +36,11 @@ export const projects: Project[] = [
 
 export const Projects = () => {
   const [projectIndex, setProjectIndex] = useState(0)
-
   const project = projects[projectIndex]
+
   return (
-    <>
+    <section>
+      <h3>some personal projects</h3>
       <div>
         <div className='relative bg-zinc-200 h-[280px] md:h-[380px]'>
           <Image
@@ -94,6 +95,6 @@ export const Projects = () => {
           next
         </a>
       </div>
-    </>
+    </section>
   )
 }

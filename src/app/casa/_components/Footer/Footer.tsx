@@ -1,5 +1,5 @@
-import type { SpotifyPlaybackState } from '../../utils/spotify'
-import { FooterPassword } from './password'
+import type { SpotifyPlaybackState } from '@/shared/spotify'
+import { Password } from './Password'
 
 interface Props {
   playbackState?: SpotifyPlaybackState
@@ -10,9 +10,10 @@ export const Footer = ({ playbackState }: Props) => {
   const context = playbackState?.context
 
   const getNowPlayingUrl = () => {
-    const likedSongsUrl = 'https://api.spotify.com/v1/me/tracks'
+    const likedSongsUrl = 'https://open.spotify.com/collection/tracks'
     const contextUrl = context?.external_urls.spotify
     const contextIsPrivate = contextUrl === likedSongsUrl
+
     if (!contextUrl || contextIsPrivate) {
       return track?.external_urls.spotify
     }
@@ -35,7 +36,7 @@ export const Footer = ({ playbackState }: Props) => {
           ♫ {track.artists[0].name} - {track.name}
         </a>
       )}
-      <FooterPassword />
+      <Password />
     </footer>
   )
 }

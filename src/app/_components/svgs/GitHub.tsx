@@ -1,6 +1,4 @@
-import React, { ReactElement } from 'react'
-
-const GitHub = (): ReactElement => {
+export const GitHub = () => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -12,4 +10,3 @@ const GitHub = (): ReactElement => {
     </svg>
   )
 }
-export default GitHub
