@@ -15,11 +15,13 @@
     ]
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.61.3",
     "axios": "^0.27.2",
     "dayjs": "^1.11.13",
     "next": "^14.2.14",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
