@@ -10,6 +10,7 @@ const PLACEHOLDERS = ['tastes sweet and delicate', 'reminds me of my childhood s
 
 interface FormValues {
   searchQuery: string
+  enableSmartSuggestions: boolean
 }
 
 export const Content = () => {
@@ -19,10 +20,14 @@ export const Content = () => {
     return PLACEHOLDERS[index]
   }, [])
 
-  const { handleSubmit, register, setValue } = useForm<FormValues>()
+  const { handleSubmit, register, setValue } = useForm<FormValues>({
+    defaultValues: {
+      enableSmartSuggestions: false,
+    },
+  })
 
   const [searchParams, setSearchParams] = useState('')
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['/api/search_products', searchParams],
     enabled: !!searchParams,
     queryFn: async () => {
@@ -38,20 +43,21 @@ export const Content = () => {
   })
 
   const onSubmit = handleSubmit(async (values) => {
-    const searchQuery = values.searchQuery || placeholder
-    const params = new URLSearchParams({ q: searchQuery })
+    const q = values.searchQuery || placeholder
+    const filterType = values.enableSmartSuggestions ? 'similarity' : ''
+    const params = new URLSearchParams({ q, filterType })
     setSearchParams(params.toString())
 
     // submit the placeholder if it doesn't
     if (!values.searchQuery) {
-      setValue('searchQuery', searchQuery)
+      setValue('searchQuery', q)
     }
   })
 
   return (
     <>
       <h1 className='text-2xl'>Coffee Catalog PH</h1>
-      <section>
+      <section className='flex flex-col items-center'>
         <form className='flex flex-col items-center mt-4 gap-3' onSubmit={onSubmit}>
           <p className='text-lg'>{"I'm looking for coffee that..."}</p>
           <input
@@ -63,7 +69,13 @@ export const Content = () => {
           <button type='submit' className='px-4 py-1 rounded bg-zinc-100 text-zinc-700'>
             search
           </button>
+          <span className='flex gap-2 items-center'>
+            <input type='checkbox' {...register('enableSmartSuggestions')} />
+            <label htmlFor='enableSmartSuggestions'>enable smart suggestions? (development)</label>
+          </span>
         </form>
+
+        {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
       </section>
 
       {!!data && (

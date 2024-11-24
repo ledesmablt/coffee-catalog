@@ -4,4 +4,6 @@ export interface Product {
   specifications: string
   image_url: string
   shopify_url: string
+  embedding: number[]
+  similarity?: number
 }

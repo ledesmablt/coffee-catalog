@@ -24,6 +24,7 @@ export const ProductCard = ({ product }: Props) => {
           <a href={product.shopify_url} target='_blank' rel='noreferrer'>
             buy on shopify
           </a>
+          <b>similarity: {product.similarity}</b>
         </div>
       </div>
 
