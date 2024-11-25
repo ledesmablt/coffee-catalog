@@ -17,10 +17,10 @@ def main():
         for product in products:
             all_products.append(product)
 
-        with open(OUTPUT_PATH, 'w') as f:
-            json.dump(all_products, f)
+    with open(OUTPUT_PATH, 'w') as f:
+        json.dump(all_products, f)
 
-        print(f"{len(all_products)} products written to {OUTPUT_PATH}")
+    print(f"{len(all_products)} products written to {OUTPUT_PATH}")
 
 if __name__ == '__main__':
     main()
