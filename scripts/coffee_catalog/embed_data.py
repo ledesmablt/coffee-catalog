@@ -2,7 +2,8 @@ from dotenv import load_dotenv
 import json
 import os
 from openai import OpenAI
-from typing import List, Union
+from scripts.coffee_catalog.shared.product import Product
+from typing import List
 
 load_dotenv()
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
@@ -15,44 +16,6 @@ def embedding_settings():
             }
 
 # https://platform.openai.com/docs/guides/embeddings
-
-# TODO: extract to separate file?
-class Product:
-    def __init__(self,
-                 name: str,
-                 description: str,
-                 source: str,
-                 specifications: Union[str, None]=None,
-                 image_url: Union[str, None] = None,
-                 shopify_url: Union[str, None] = None,
-                 embedding: Union[List[float], None] = None,
-                 ) -> None:
-        self.name = name
-        self.description = description
-        self.source = source # NOTE: this is actually roaster
-        self.specifications = specifications
-        self.image_url = image_url
-        self.shopify_url = shopify_url
-        self.embedding = embedding
-
-    def prepare_embedding_input(self):
-        lines = [
-                f"Name: {self.name}",
-                f"Description: {self.description}",
-                f"Specifications: {self.specifications or 'N/A'}",
-                ]
-        return '\n\n'.join(lines)
-
-    def to_json(self):
-        return {
-                'name': self.name,
-                'description': self.description,
-                'source': self.source,
-                'specifications': self.specifications,
-                'image_url': self.image_url,
-                'shopify_url': self.shopify_url,
-                'embedding': self.embedding,
-                }
 
 def load_products() -> List[Product]:
     data_path = os.path.join(os.getcwd(), 'data', 'merged_data.json')
@@ -78,6 +41,7 @@ def write_results(products):
 
 def main():
     products = load_products()
+    print(f"generating embeddings for {len(products)} products...")
     embedding_result = create_embeddings_as_batch(products)
     for i, result in enumerate(embedding_result.data):
         products[i].embedding = result.embedding

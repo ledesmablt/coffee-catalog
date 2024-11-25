@@ -13,12 +13,14 @@ def main():
         with open(path) as f:
             products = json.load(f)
 
+        print(f"{filename}: {len(products)} products")
         for product in products:
-            product['source'] = filename.replace('.json', '')
             all_products.append(product)
 
         with open(OUTPUT_PATH, 'w') as f:
             json.dump(all_products, f)
+
+        print(f"{len(all_products)} products written to {OUTPUT_PATH}")
 
 if __name__ == '__main__':
     main()
