@@ -4,8 +4,8 @@ class Product:
     def __init__(self,
                  brand: str,
                  name: str,
-                 description: str,
                  sku: Union[str, None] = None,
+                 description: Union[str, None] = None,
                  specifications: Union[str, None] = None,
                  image_url: Union[str, None] = None,
                  shopify_url: Union[str, None] = None,
@@ -24,11 +24,14 @@ class Product:
         self.id = id or hash(f"{self.brand}:{self.name}")
 
     def prepare_embedding_input(self):
-        lines = [
-                f"Name: {self.name}",
-                f"Description: {self.description}",
-                f"Specifications: {self.specifications or 'N/A'}",
-                ]
+        lines = [f"Name: {self.name}"]
+
+        if self.description:
+            lines.append(f"Description: {self.description}")
+
+        if self.specifications:
+            lines.append(f"Specifications: {self.specifications or 'N/A'}")
+
         return '\n\n'.join(lines)
 
     def to_json(self):

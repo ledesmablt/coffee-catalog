@@ -2,7 +2,7 @@ import json
 import re
 import requests
 from bs4 import BeautifulSoup
-from scripts.coffee_catalog.shared.product import Product
+from tasks.coffee_catalog.shared.product import Product
 
 BASE_URL = 'https://store.yardstickcoffee.com'
 ENTRYPOINT = BASE_URL + '/collections/coffees'
@@ -47,10 +47,10 @@ def parse_product(soup, shopify_url):
             brand=BRAND_NAME,
             name=name,
             sku=sku,
-            description= description,
-            specifications= specifications,
-            image_url= image_url,
-            shopify_url= shopify_url,
+            description=description,
+            specifications=specifications,
+            image_url=image_url,
+            shopify_url=shopify_url,
             )
 
 def sanitize_data(data: dict):

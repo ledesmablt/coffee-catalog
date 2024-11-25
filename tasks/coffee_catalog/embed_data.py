@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import json
 import os
 from openai import OpenAI
-from scripts.coffee_catalog.shared.product import Product
+from tasks.coffee_catalog.shared.product import Product
 from typing import List
 
 load_dotenv()
