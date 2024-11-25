@@ -81,7 +81,7 @@ export const Content = () => {
       {!!data && (
         <section className='flex flex-col gap-4 items-center'>
           {data.map((product) => {
-            return <ProductCard key={`product-${product.name}`} product={product} />
+            return <ProductCard key={`product-${product.id}`} product={product} />
           })}
         </section>
       )}

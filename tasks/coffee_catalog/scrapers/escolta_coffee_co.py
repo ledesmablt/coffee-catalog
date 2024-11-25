@@ -34,7 +34,7 @@ def extract_specifications(soup):
 
 def parse_product(soup, shopify_url):
     info_section = soup.find('div', class_='product__info-wrapper')
-    name = info_section.find('h1').text
+    title = info_section.find('h1').text
 
     description = None
     specifications = extract_specifications(info_section.find('div', class_='product__description'))
@@ -45,10 +45,10 @@ def parse_product(soup, shopify_url):
     img = media_section.find('img')
     image_url = 'https:' + img['src'] if img else None
 
-    print(f"parsed product: {name}")
+    print(f"parsed product: {title}")
     return Product(
             brand=BRAND_NAME,
-            name=name,
+            title=title,
             sku=sku,
             description=description,
             specifications=specifications,

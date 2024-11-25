@@ -71,7 +71,7 @@ def extract_description(soup):
 
 def parse_product(soup, shopify_url):
     info_section = soup.find('div', class_='product__content')
-    name = info_section.find('h1').text
+    title = info_section.find('h1').text
 
     description = extract_description(info_section.find('div', attrs={'itemprop':'description'}))
     # NOTE: specifications is in a table. is it still worth splitting this out? combine into one?
@@ -83,10 +83,10 @@ def parse_product(soup, shopify_url):
     img = media_section.find('img')
     image_url = 'https:' + img['src'] if img else None
 
-    print(f"parsed product: {name}")
+    print(f"parsed product: {title}")
     return Product(
             brand=BRAND_NAME,
-            name=name,
+            title=title,
             sku=sku,
             description=description,
             specifications=specifications,

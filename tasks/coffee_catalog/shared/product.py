@@ -3,7 +3,7 @@ from typing import List, Union
 class Product:
     def __init__(self,
                  brand: str,
-                 name: str,
+                 title: str,
                  sku: Union[str, None] = None,
                  description: Union[str, None] = None,
                  specifications: Union[str, None] = None,
@@ -13,7 +13,7 @@ class Product:
                  id: Union[int, None] = None,
                  ) -> None:
         self.brand = brand # NOTE: this is actually roaster
-        self.name = name
+        self.title = title
         self.sku = sku
         self.description = description
         self.specifications = specifications
@@ -21,10 +21,10 @@ class Product:
         self.shopify_url = shopify_url
         self.embedding = embedding
         # TODO: while there's no db, we'll set the id this way.
-        self.id = id or hash(f"{self.brand}:{self.name}")
+        self.id = id or hash(f"{self.brand}:{self.title}")
 
     def prepare_embedding_input(self):
-        lines = [f"Name: {self.name}"]
+        lines = [f"Title: {self.title}"]
 
         if self.description:
             lines.append(f"Description: {self.description}")

@@ -32,7 +32,7 @@ def extract_text(soup):
 
 def parse_product(soup, shopify_url):
     info_section = soup.find('product-info')
-    name = info_section.find('h1').text
+    title = info_section.find('h1').text
 
     description = extract_text(info_section.find('div', class_='product-content-tab__content'))
     specifications = extract_text(info_section.find('div', class_='product-information-tag__body'))
@@ -42,10 +42,10 @@ def parse_product(soup, shopify_url):
     image_src = media_section.find('img')['src']
     image_url = 'https:' + image_src
 
-    print(f"parsed product: {name}")
+    print(f"parsed product: {title}")
     return Product(
             brand=BRAND_NAME,
-            name=name,
+            title=title,
             sku=sku,
             description=description,
             specifications=specifications,
