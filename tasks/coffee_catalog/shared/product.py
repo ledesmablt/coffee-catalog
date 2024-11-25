@@ -35,4 +35,15 @@ class Product:
         return '\n\n'.join(lines)
 
     def to_json(self):
-        return { k:v for k,v in self.__dict__.items() if k[:1] != '_'}
+        return {
+                k: self._sanitize(v)
+                for k,v in self.__dict__.items()
+                if k[:1] != '_'
+                }
+
+    def _sanitize(self, v):
+        if isinstance(v, str):
+            return v.strip()
+
+        return v
+

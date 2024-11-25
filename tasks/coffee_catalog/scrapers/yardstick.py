@@ -53,12 +53,6 @@ def parse_product(soup, shopify_url):
             shopify_url=shopify_url,
             )
 
-def sanitize_data(data: dict):
-    return {
-        key: value.strip() if isinstance(value, str) else value
-        for key, value in data.items()
-    }
-
 def save_as_json(data):
     with open(FILENAME, 'w') as f:
         json.dump(data, f)
@@ -67,10 +61,9 @@ def main():
     print(f"starting {BRAND_NAME}")
     soup = load_entrypoint()
     products = get_products(soup)
-    parsed_products = [load_product(product) for product in products]
-    sanitized_products = [sanitize_data(product.to_json()) for product in parsed_products]
-    save_as_json(sanitized_products)
-    print(f"{len(sanitized_products)} products saved from {BRAND_NAME}")
+    products = [load_product(product).to_json() for product in products]
+    save_as_json(products)
+    print(f"{len(products)} products saved from {BRAND_NAME}")
 
 if __name__ == '__main__':
     main()
