@@ -101,13 +101,17 @@ def save_as_json(data):
 def main():
     print(f"starting {BRAND_NAME}")
     all_products = []
+    all_product_urls = set()
     for collection_url in COLLECTIONS:
         print(f"loading products for {collection_url}")
         soup = load_collection(collection_url)
         product_urls = get_product_urls(soup)
         for product_url in product_urls:
-            product = load_product(product_url)  
-            all_products.append(product.to_json())
+            all_product_urls.add(product_url)
+
+    for product_url in sorted(list(all_product_urls)):
+        product = load_product(product_url)  
+        all_products.append(product.to_json())
 
     save_as_json(all_products)
     print(f"{len(all_products)} products saved from {BRAND_NAME}")

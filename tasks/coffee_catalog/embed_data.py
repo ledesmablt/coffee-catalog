@@ -17,18 +17,28 @@ def embedding_settings():
 
 # https://platform.openai.com/docs/guides/embeddings
 
-def load_products() -> List[Product]:
-    data_path = os.path.join(os.getcwd(), 'data', 'merged_data.json')
-    products = []
+def load_products() -> dict[int, Product]:
+    data_path = 'data/merged_data.json'
     with open(data_path) as f:
-        products = json.load(f)
+        saved_products = [Product(**p) for p in json.load(f)]
 
-    return [Product(**product) for product in products]
+    products_dict = {
+        p.id: p
+        for p in saved_products
+    }
+
+    # assign embedding if exists
+    if os.path.exists(OUTPUT_PATH):
+        with open(OUTPUT_PATH) as f:
+            embedded_list = [Product(**p) for p in json.load(f)]
+        
+        for p in embedded_list:
+            if products_dict.get(p.id):
+                products_dict[p.id].embedding = p.embedding
+
+    return products_dict
 
 # TODO: use the batch api after doing some R&D on what settings work best.
-# TODO: this also doesn't account for incremental updates - need a proper db to make it
-# easy to work with. otherwise we'll be calling the API on ALL products, even those already
-# with embeddings.
 def create_embeddings_as_batch(products: List[Product]):
     inputs = [p.prepare_embedding_input() for p in products]
     return client.embeddings.create(input=inputs, **embedding_settings())
@@ -40,13 +50,23 @@ def write_results(products):
         json.dump([product.to_json() for product in products], f)
 
 def main():
-    products = load_products()
-    print(f"generating embeddings for {len(products)} products...")
-    embedding_result = create_embeddings_as_batch(products)
+    products_dict = load_products()
+    products_without_embeddings = [p for p in products_dict.values() if not p.embedding]
+
+    if len(products_without_embeddings) == 0:
+        print(f"all {len(products_dict)} products already have embeddings - exiting...")
+        return
+
+    print(f"generating embeddings for {len(products_without_embeddings)} products...")
+    embedding_result = create_embeddings_as_batch(products_without_embeddings)
     for i, result in enumerate(embedding_result.data):
-        products[i].embedding = result.embedding
-    write_results(products)
-    print(f"generated embeddings for {len(products)} products")
+        product = products_without_embeddings[i]
+        product.embedding = result.embedding
+        products_dict[product.id] = product
+
+    output = [p for p in products_dict.values()]
+    write_results(output)
+    print(f"saved embeddings for {len(output)} products")
 
 if __name__ == '__main__':
     main()

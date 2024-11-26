@@ -6,7 +6,12 @@ import { useForm } from 'react-hook-form'
 import type { Product } from '../_types/schema'
 import { ProductCard } from './ProductCard'
 
-const PLACEHOLDERS = ['tastes sweet and delicate', 'reminds me of my childhood summer'] as const
+const PLACEHOLDERS = [
+  'sweet and delicate flavors',
+  'memories from my childhood',
+  'good cup sidamo special',
+  'coffee from sitio san roque',
+] as const
 
 interface FormValues {
   searchQuery: string
@@ -59,7 +64,7 @@ export const Content = () => {
       <h1 className='text-2xl'>Coffee Catalog PH</h1>
       <section className='flex flex-col items-center'>
         <form className='flex flex-col items-center mt-4 gap-3' onSubmit={onSubmit}>
-          <p className='text-lg'>{"I'm looking for coffee that..."}</p>
+          <p className='text-lg'>{"I'm looking for..."}</p>
           <input
             type='text'
             placeholder={placeholder}
