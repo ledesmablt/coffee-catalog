@@ -27,13 +27,13 @@ export const Content = () => {
 
   const { handleSubmit, register, setValue } = useForm<FormValues>({
     defaultValues: {
-      enableSmartSuggestions: false,
+      enableSmartSuggestions: true,
     },
   })
 
   const [searchParams, setSearchParams] = useState('')
   const { data, isLoading } = useQuery({
-    queryKey: ['/api/search_products', searchParams],
+    queryKey: ['/api/products/search', searchParams],
     enabled: !!searchParams,
     queryFn: async () => {
       if (!searchParams) {
@@ -41,7 +41,7 @@ export const Content = () => {
       }
 
       // TODO: improve types
-      const res = await fetch(`/coffee_catalog/api/search_products?${searchParams}`)
+      const res = await fetch(`/coffee_catalog/api/products/search?${searchParams}`)
       const { data } = await res.json()
       return data as Product[]
     },
@@ -74,17 +74,13 @@ export const Content = () => {
           <button type='submit' className='px-4 py-1 rounded bg-zinc-100 text-zinc-700'>
             search
           </button>
-          <span className='flex gap-2 items-center'>
-            <input type='checkbox' {...register('enableSmartSuggestions')} />
-            <label htmlFor='enableSmartSuggestions'>enable smart suggestions? (development)</label>
-          </span>
         </form>
 
         {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
       </section>
 
       {!!data && (
-        <section className='flex flex-col gap-4 items-center'>
+        <section className='flex flex-col gap-4 items-center max-w-[400px] md:max-w-[600px]'>
           {data.map((product) => {
             return <ProductCard key={`product-${product.id}`} product={product} />
           })}

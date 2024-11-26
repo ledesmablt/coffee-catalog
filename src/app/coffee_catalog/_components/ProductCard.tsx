@@ -7,7 +7,7 @@ interface Props {
 export const ProductCard = ({ product }: Props) => {
   // TODO: placeholder image for broken or missing images
   return (
-    <div className='border rounded py-4 px-8 w-full max-w-[600px]'>
+    <div className='border rounded py-4 px-8 w-full'>
       <h4 className='font-bold text-lg mb-1'>{product.title}</h4>
       <div className='flex flex-col md:flex-row gap-4'>
         <div>

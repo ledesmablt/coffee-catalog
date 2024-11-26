@@ -1,7 +1,6 @@
-import nodePath from 'path'
-import { promises as fs } from 'fs'
-import type { Product } from '../../_types/schema'
 import OpenAI from 'openai'
+import { loadAllProducts } from '../../_shared/loadAllProducts'
+import { applyStringFilter, SearchFilterFn } from '../../_shared/filters'
 
 const openAIClient = new OpenAI({ apiKey: process.env['OPENAI_API_KEY'] })
 const OPENAI_EMBEDDING_SETTINGS = {
@@ -9,12 +8,7 @@ const OPENAI_EMBEDDING_SETTINGS = {
   dimensions: 256,
 } as const
 
-const loadAllData = async (): Promise<Product[]> => {
-  const rootPath = process.cwd()
-  const dataPath = nodePath.join(rootPath, 'data', 'merged_data_with_embeddings.json')
-  const fileContent = await fs.readFile(dataPath, 'utf8')
-  return JSON.parse(fileContent)
-}
+const LIMIT = 3
 
 export const GET = async (req: Request): Promise<Response> => {
   const { searchParams } = new URL(req.url)
@@ -25,9 +19,9 @@ export const GET = async (req: Request): Promise<Response> => {
     throw new Error('q is a required argument')
   }
 
-  const allData = await loadAllData()
+  const allData = await loadAllProducts()
   const applyFilter = getFilterFn(searchParams)
-  const topResults = await applyFilter(searchQuery, allData)
+  const topResults = (await applyFilter(searchQuery, allData)).slice(0, LIMIT)
 
   const responseBody = { data: topResults }
   return new Response(JSON.stringify(responseBody), {
@@ -48,18 +42,6 @@ const getFilterFn = (searchParams: URLSearchParams): SearchFilterFn => {
   }
 }
 
-type SearchFilterFn = (searchQuery: string, products: Product[]) => Promise<Product[]>
-
-const applyStringFilter: SearchFilterFn = async (searchQuery, products) => {
-  const matchingData = products.filter((product) => {
-    const filterableString = [product.title, product.brand, product.description, product.specifications]
-      .join(' ')
-      .toLowerCase()
-    return filterableString.includes(searchQuery)
-  })
-  return matchingData.slice(0, 3)
-}
-
 // TODO: better to do this with a vector db
 const applySimilarityFilter: SearchFilterFn = async (searchQuery, products) => {
   const inputEmbedding = await generateEmbedding(searchQuery)
@@ -73,7 +55,7 @@ const applySimilarityFilter: SearchFilterFn = async (searchQuery, products) => {
     })
     .sort((a, b) => b.similarity - a.similarity)
 
-  return results.slice(0, 3)
+  return results
 }
 
 const generateEmbedding = async (input: string): Promise<number[]> => {
