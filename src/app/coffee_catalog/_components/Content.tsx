@@ -68,7 +68,7 @@ export const Content = () => {
           <input
             type='text'
             placeholder={placeholder}
-            className='w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
+            className='w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
             {...register('searchQuery')}
           />
           <button type='submit' className='px-4 py-1 rounded bg-zinc-100 text-zinc-700'>

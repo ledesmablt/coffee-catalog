@@ -24,7 +24,7 @@ class Product:
         self.id = id or hash(f"{self.brand}:{self.title}")
 
     def prepare_embedding_input(self):
-        lines = [f"Title: {self.title}"]
+        lines = [f"Title: {self.title}", f"Brand: {self.brand}"]
 
         if self.description:
             lines.append(f"Description: {self.description}")

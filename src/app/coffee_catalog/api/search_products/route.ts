@@ -52,7 +52,9 @@ type SearchFilterFn = (searchQuery: string, products: Product[]) => Promise<Prod
 
 const applyStringFilter: SearchFilterFn = async (searchQuery, products) => {
   const matchingData = products.filter((product) => {
-    const filterableString = [product.title, product.description, product.specifications].join(' ').toLowerCase()
+    const filterableString = [product.title, product.brand, product.description, product.specifications]
+      .join(' ')
+      .toLowerCase()
     return filterableString.includes(searchQuery)
   })
   return matchingData.slice(0, 3)
