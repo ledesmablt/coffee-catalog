@@ -1,5 +1,6 @@
+import { loadBrands } from '../../_shared/loaders/brands'
+import { loadProducts } from '../../_shared/loaders/products'
 import { applyStringFilter } from '../_shared/filters'
-import { loadAllProducts } from '../_shared/loadAllProducts'
 
 const LIMIT = 5
 
@@ -7,12 +8,18 @@ export const GET = async (req: Request): Promise<Response> => {
   const { searchParams } = new URL(req.url)
 
   // NOTE: very crude, let's do it better with a db next time
-  let products = await loadAllProducts()
+  let products = await loadProducts()
+  const brands = await loadBrands()
   // filter by brand
   // filter by matching keywords
-  const brand = searchParams.get('brand')?.toLowerCase()
-  if (brand) {
-    products = products.filter((p) => p.brand.toLowerCase() === brand.toLowerCase())
+  const brandSlug = searchParams.get('brand')?.toLowerCase()
+  if (brandSlug) {
+    const brand = brands.find((b) => b.slug === brandSlug)
+    if (brand) {
+      products = products.filter((p) => p.brand === brand.name)
+    } else {
+      products = []
+    }
   }
 
   const q = searchParams.get('q')?.toLowerCase()

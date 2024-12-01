@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import type { Product } from '../../_types/schema'
+import type { Brand, Product } from '../../_types/schema'
 import { ProductCard } from '../../_components/ProductCard'
 import { type ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/navigation'
 import { Pagination } from './Pagination'
@@ -13,8 +13,6 @@ interface FormValues {
   brand?: string
   page: number
 }
-
-const BRANDS = ['Yardstick', 'Good Cup Coffee Co.', 'Basilio', 'Escolta Coffee Company'] as const
 
 const extractFilters = (query: ReadonlyURLSearchParams): FormValues => {
   const data: FormValues = { page: 1 }
@@ -48,8 +46,11 @@ const filtersToQuery = (filters: FormValues): string => {
 }
 
 // TODO: implement brands UI filter (simple dropdown next to search)
-export const Content = () => {
-  const placeholder = BRANDS[0]
+export interface Props {
+  brands: Brand[]
+}
+export const Content = ({ brands }: Props) => {
+  const placeholder = brands[0].name
 
   const router = useRouter()
   const query = useSearchParams()
@@ -91,9 +92,34 @@ export const Content = () => {
             search
           </button>
         </form>
-
-        {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
       </section>
+
+      <section className='flex gap-2 justify-center'>
+        {brands.map((brand) => {
+          // TODO: as more brands are added, this doesn't work. decide how to show 10+ brands
+          const isSelected = filters.brand === brand.slug
+          let className = 'border rounded py-2 px-2 w-32 h-32 cursor-pointer'
+          if (isSelected) {
+            className += ' border-zinc-800'
+          }
+          const onClick = () => {
+            if (isSelected) {
+              onSubmit({ ...filters, page: 1, brand: undefined })
+            } else {
+              onSubmit({ ...filters, page: 1, brand: brand.slug })
+            }
+          }
+          return (
+            <div className={className} onClick={onClick} key={`brand-${brand.slug}`}>
+              <div className='flex flex-col items-center justify-center text-center w-full h-full'>
+                <h2>{brand.name}</h2>
+              </div>
+            </div>
+          )
+        })}
+      </section>
+
+      {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
 
       {!!data?.data && (
         <section className='flex flex-col items-center gap-4 my-6'>

@@ -1,6 +1,6 @@
 import OpenAI from 'openai'
-import { loadAllProducts } from '../../_shared/loadAllProducts'
 import { applyStringFilter, SearchFilterFn } from '../../_shared/filters'
+import { loadProducts } from '@/app/coffee_catalog/_shared/loaders/products'
 
 const openAIClient = new OpenAI({ apiKey: process.env['OPENAI_API_KEY'] })
 const OPENAI_EMBEDDING_SETTINGS = {
@@ -19,7 +19,7 @@ export const GET = async (req: Request): Promise<Response> => {
     throw new Error('q is a required argument')
   }
 
-  const allData = await loadAllProducts()
+  const allData = await loadProducts()
   const applyFilter = getFilterFn(searchParams)
   const topResults = (await applyFilter(searchQuery, allData)).slice(0, LIMIT)
 
