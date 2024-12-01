@@ -76,10 +76,12 @@ export const Content = ({ brands }: Props) => {
     router.push(`${window.location.pathname}?${newQuery}`)
   }
 
+  const selectedBrand = brands.find((brand) => filters.brand === brand.slug)
+
   return (
     <>
       <h1 className='text-2xl'>Browse Products</h1>
-      <section className='flex flex-col items-center'>
+      <section aria-label='search input' className='flex flex-col items-center'>
         <form className='flex flex-col items-center mt-4 gap-3' onSubmit={handleSubmit(onSubmit)}>
           <p className='text-lg'>{"I'm looking for..."}</p>
           <input
@@ -94,35 +96,59 @@ export const Content = ({ brands }: Props) => {
         </form>
       </section>
 
-      <section className='flex gap-2 justify-center'>
-        {brands.map((brand) => {
-          // TODO: as more brands are added, this doesn't work. decide how to show 10+ brands
-          const isSelected = filters.brand === brand.slug
-          let className = 'border rounded py-2 px-2 w-32 h-32 cursor-pointer'
-          if (isSelected) {
-            className += ' border-zinc-800'
-          }
-          const onClick = () => {
+      <section aria-label='brand filters' className='flex flex-col gap-4 items-center'>
+        <div aria-label='brand selector' className='grid grid-cols-4 gap-2'>
+          {brands.map((brand) => {
+            // TODO: convert to grid
+            // TODO: as more brands are added, this doesn't work. decide how to show 10+ brands
+            const isSelected = filters.brand === brand.slug
+            let className = 'border rounded py-2 px-2 h-32 cursor-pointer'
             if (isSelected) {
-              onSubmit({ ...filters, page: 1, brand: undefined })
-            } else {
-              onSubmit({ ...filters, page: 1, brand: brand.slug })
+              className += ' border-zinc-800'
             }
-          }
-          return (
-            <div className={className} onClick={onClick} key={`brand-${brand.slug}`}>
-              <div className='flex flex-col items-center justify-center text-center w-full h-full'>
-                <h2>{brand.name}</h2>
+            const onClick = () => {
+              if (isSelected) {
+                onSubmit({ ...filters, page: 1, brand: undefined })
+              } else {
+                onSubmit({ ...filters, page: 1, brand: brand.slug })
+              }
+            }
+            return (
+              <div className={className} onClick={onClick} key={`brand-${brand.slug}`}>
+                <div className='flex flex-col items-center justify-center text-center w-full h-full'>
+                  <h2>{brand.name}</h2>
+                </div>
               </div>
+            )
+          })}
+        </div>
+
+        {selectedBrand && (
+          <div aria-label='selected brand info' className='w-full border rounded px-8 py-4'>
+            <h2 className='font-bold'>{selectedBrand.name}</h2>
+            <p>TODO placeholder description.</p>
+            <img src={selectedBrand.logo_url} alt='' />
+            <div className='flex gap-2 my-4'>
+              {selectedBrand.website_url && (
+                <a href={selectedBrand.website_url} target='_blank' rel='noreferrer'>
+                  website
+                </a>
+              )}
+              {selectedBrand.instagram_username && (
+                <a href={`https://instagram.com/@${selectedBrand.instagram_username}`} target='_blank' rel='noreferrer'>
+                  instagram
+                </a>
+              )}
             </div>
-          )
-        })}
+            <p>TODO placeholder gmaps location embed</p>
+          </div>
+        )}
       </section>
 
       {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
 
       {!!data?.data && (
-        <section className='flex flex-col items-center gap-4 my-6'>
+        <section aria-label='product results' className='flex flex-col items-center gap-4 my-6'>
           <Pagination
             currentPage={filters.page}
             maxPages={data.maxPages}
