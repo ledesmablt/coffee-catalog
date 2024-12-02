@@ -7,6 +7,9 @@ import type { Brand, Product } from '../../_types/schema'
 import { ProductCard } from '../../_components/ProductCard'
 import { type ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/navigation'
 import { Pagination } from './Pagination'
+import { InstagramIcon, ShoppingBagIcon } from 'lucide-react'
+import { GOOGLE_MAPS_API_KEY } from '../../_shared/env'
+import { ImageWithFallback } from '../../_components/ImageWithFallback'
 
 interface FormValues {
   q?: string
@@ -45,7 +48,6 @@ const filtersToQuery = (filters: FormValues): string => {
   return query.toString()
 }
 
-// TODO: implement brands UI filter (simple dropdown next to search)
 export interface Props {
   brands: Brand[]
 }
@@ -90,13 +92,16 @@ export const Content = ({ brands }: Props) => {
             className='w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
             {...register('q')}
           />
-          <button type='submit' className='px-4 py-1 rounded bg-zinc-100 text-zinc-700'>
+          <button
+            type='submit'
+            className='px-4 py-1 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors'
+          >
             search
           </button>
         </form>
       </section>
 
-      <section aria-label='brand filters' className='flex flex-col gap-4 items-center'>
+      <section aria-label='brand filters' className='flex flex-col gap-4 items-center max-w-[576px]'>
         <div aria-label='brand selector' className='grid grid-cols-4 gap-2'>
           {brands.map((brand) => {
             // TODO: convert to grid
@@ -124,23 +129,54 @@ export const Content = ({ brands }: Props) => {
         </div>
 
         {selectedBrand && (
-          <div aria-label='selected brand info' className='w-full border rounded px-8 py-4'>
-            <h2 className='font-bold'>{selectedBrand.name}</h2>
-            <p>TODO placeholder description.</p>
-            <img src={selectedBrand.logo_url} alt='' />
-            <div className='flex gap-2 my-4'>
-              {selectedBrand.website_url && (
-                <a href={selectedBrand.website_url} target='_blank' rel='noreferrer'>
-                  website
+          <div
+            aria-label='selected brand info'
+            className='w-full border rounded px-8 py-4 flex flex-col items-center gap-2'
+          >
+            <div className='min-h-16 max-h-32 flex justify-center mb-4'>
+              <ImageWithFallback
+                src={selectedBrand.logo_url}
+                alt={`${selectedBrand.name} logo`}
+                className='object-contain'
+              />
+            </div>
+            <h2 className='font-bold text-lg'>{selectedBrand.name}</h2>
+            <p className='text-center'>{selectedBrand.description}</p>
+            <div className='flex gap-3 my-3'>
+              {selectedBrand.shop_url && (
+                <a
+                  href={selectedBrand.shop_url}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='text-zinc-600 hover:text-zinc-900 transition-colors'
+                >
+                  <ShoppingBagIcon />
                 </a>
               )}
               {selectedBrand.instagram_username && (
-                <a href={`https://instagram.com/@${selectedBrand.instagram_username}`} target='_blank' rel='noreferrer'>
-                  instagram
+                <a
+                  href={`https://instagram.com/@${selectedBrand.instagram_username}`}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='text-zinc-600 hover:text-zinc-900 transition-colors'
+                >
+                  <InstagramIcon />
                 </a>
               )}
             </div>
-            <p>TODO placeholder gmaps location embed</p>
+            {selectedBrand.google_maps_query && (
+              <div className='aspect-video relative mt-4 w-full'>
+                <iframe
+                  src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${selectedBrand.google_maps_query}`}
+                  width='100%'
+                  height='100%'
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading='lazy'
+                  referrerPolicy='no-referrer-when-downgrade'
+                ></iframe>
+              </div>
+            )}
           </div>
         )}
       </section>
@@ -156,7 +192,7 @@ export const Content = ({ brands }: Props) => {
               onSubmit({ ...filters, page: newPage })
             }}
           />
-          <div className='flex flex-col gap-4 items-center max-w-[400px] md:max-w-[600px]'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4'>
             {data.data.map((product) => {
               return <ProductCard key={`product-${product.id}`} product={product} />
             })}

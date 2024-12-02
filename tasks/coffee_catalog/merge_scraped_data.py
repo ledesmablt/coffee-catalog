@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 OUTPUT_PATH = 'data/merged_data.json'
 
@@ -15,6 +16,7 @@ def main():
 
         print(f"{filename}: {len(products)} products")
         for product in products:
+            product['image_url'] = re.sub(r"&width=\d+", '', product['image_url'])
             all_products.append(product)
 
     with open(OUTPUT_PATH, 'w') as f:

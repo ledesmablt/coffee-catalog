@@ -2,7 +2,7 @@ import { loadBrands } from '../../_shared/loaders/brands'
 import { loadProducts } from '../../_shared/loaders/products'
 import { applyStringFilter } from '../_shared/filters'
 
-const LIMIT = 5
+const LIMIT = 6
 
 export const GET = async (req: Request): Promise<Response> => {
   const { searchParams } = new URL(req.url)

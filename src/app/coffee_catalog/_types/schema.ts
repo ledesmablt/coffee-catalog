@@ -13,10 +13,11 @@ export interface Product {
 
 export interface Brand {
   name: string
-  website_url: string
-  instagram_username: string
-  logo_url: string
-  google_maps_plus_code?: string
+  description?: string
+  shop_url?: string
+  instagram_username?: string
+  logo_url?: string
+  google_maps_query?: string
   state: string
   slug: string
 }

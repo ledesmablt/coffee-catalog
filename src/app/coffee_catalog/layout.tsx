@@ -11,7 +11,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <main className='flex flex-col items-center min-h-screen'>
-        <div id='center-wrapper' className='flex flex-col items-center gap-2 my-16 w-[90%] max-w-[576px]'>
+        <div
+          id='center-wrapper'
+          className='flex flex-col items-center gap-2 my-8 w-[90%] max-w-[576px] md:max-w-[960px]'
+        >
           <Nav />
           {children}
           <Footer />

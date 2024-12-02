@@ -31,6 +31,7 @@ export const Content = () => {
     },
   })
 
+  // TODO: use default search params to show some results
   const [searchParams, setSearchParams] = useState('')
   const { data, isLoading } = useQuery({
     queryKey: ['/api/products/search', searchParams],
@@ -71,7 +72,10 @@ export const Content = () => {
             className='w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
             {...register('searchQuery')}
           />
-          <button type='submit' className='px-4 py-1 rounded bg-zinc-100 text-zinc-700'>
+          <button
+            type='submit'
+            className='px-4 py-1 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors'
+          >
             search
           </button>
         </form>
@@ -80,7 +84,7 @@ export const Content = () => {
       </section>
 
       {!!data && (
-        <section className='flex flex-col gap-4 items-center max-w-[400px] md:max-w-[600px]'>
+        <section className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4'>
           {data.map((product) => {
             return <ProductCard key={`product-${product.id}`} product={product} />
           })}
