@@ -16,7 +16,9 @@ def main():
 
         print(f"{filename}: {len(products)} products")
         for product in products:
-            product['image_url'] = re.sub(r"&width=\d+", '', product['image_url'])
+            if product['image_url']:
+                product['image_url'] = re.sub(r"&width=\d+", '', product['image_url'])
+
             all_products.append(product)
 
     with open(OUTPUT_PATH, 'w') as f:
