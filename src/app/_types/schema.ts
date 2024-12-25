@@ -17,6 +17,7 @@ export interface Brand {
   shop_url?: string
   instagram_username?: string
   logo_url?: string
+  logo_background_color?: string
   google_maps_query?: string
   state: string
   slug: string

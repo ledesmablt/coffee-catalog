@@ -53,5 +53,15 @@
     "logo_url": "https://www.cremaandcream.ph/cdn/shop/files/cclogoshopify491px_500x.png?v=1614314158",
     "google_maps_query": "place_id:ChIJ9Smc-_q3lzMRBYhhixus-UQ",
     "slug": "crema_and_cream"
+  },
+  {
+    "name": "H Proper",
+    "shop_url": "https://hproper.com",
+    "description": "H PROPER COFFEE ROASTERS is a third-wave specialty café & roastery located in Cagayan de Oro City, Mindanao, Philippines. We are ready to serve you with only best ingredients that we can source around the globe.",
+    "instagram_username": "HproperCoffeeRoasters",
+    "logo_url": "https://hproper.com/cdn/shop/files/HProperCoffeeRoasters_SecondaryLogo-0-WHITE1_225x@2x.png?v=1656917300",
+    "logo_background_color": "black",
+    "google_maps_query": "place_id:ChIJpbYZCgDJlzMRII4Mn0CLyOo",
+    "slug": "h_proper"
   }
 ]

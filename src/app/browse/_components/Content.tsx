@@ -104,7 +104,6 @@ export const Content = ({ brands }: Props) => {
       <section aria-label='brand filters' className='flex flex-col gap-4 items-center max-w-[576px]'>
         <div aria-label='brand selector' className='grid grid-cols-4 gap-2'>
           {brands.map((brand) => {
-            // TODO: convert to grid
             // TODO: as more brands are added, this doesn't work. decide how to show 10+ brands
             const isSelected = filters.brand === brand.slug
             let className = 'border rounded py-2 px-2 h-32 cursor-pointer'
@@ -136,6 +135,7 @@ export const Content = ({ brands }: Props) => {
             <div className='min-h-16 max-h-32 flex justify-center mb-4'>
               <ImageWithFallback
                 src={selectedBrand.logo_url}
+                backgroundColor={selectedBrand.logo_background_color}
                 alt={`${selectedBrand.name} logo`}
                 className='object-contain'
               />
