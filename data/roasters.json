@@ -5,7 +5,7 @@
     "description": "Yardstick is a Specialty Coffee roasting company operating since 2013 out of Manila, Philippines. We are in the constant pursuit of pushing the envelope to keep increasing the ‘yardstick’ of what coffee means for the coffee industry and enthusiasts in the Philippines.",
     "instagram_username": "yardstickcoffee",
     "logo_url": "https://store.yardstickcoffee.com/cdn/shop/files/Yardstick_Logo_Long_Colour.png?v=1711439110&width=320",
-    "google_maps_query": "place_id:ChIJzYhojg7JlzMReOOd-mRcuU8&key=AIzaSyDNBYlipVU0Me7GkkIppvbqSoBPurF7uuU",
+    "google_maps_query": "place_id:ChIJzYhojg7JlzMReOOd-mRcuU8",
     "state": "Metro Manila",
     "slug": "yardstick"
   },
@@ -24,7 +24,7 @@
     "description": "Escolta Coffee Co. is a Manila-based coffee roaster whose team is obsessed with coffee and its journey from cherry to cup and the potential unlocked every step of the way. We’re passionate about sourcing great-tasting responsibly produced coffee in the Philippines and elsewhere in the globe.",
     "instagram_username": "escoltacoffee.co",
     "logo_url": "https://scontent.fmnl17-3.fna.fbcdn.net/v/t39.30808-6/296995308_130988569634791_4083924787364059252_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=BWSmTtnVyxYQ7kNvgGvdrzL&_nc_zt=23&_nc_ht=scontent.fmnl17-3.fna&_nc_gid=AZaeCOAFrgIJP1HF9IBExzy&oh=00_AYBopX2pveuxabxET-1wJVV6Oej3SpmLrpiMWmat_of_vQ&oe=67537D49",
-    "google_maps_query": "place_id:ChIJQUVR3qrLlzMRMAHl1YcKfkI&key=AIzaSyDNBYlipVU0Me7GkkIppvbqSoBPurF7uuU",
+    "google_maps_query": "place_id:ChIJQUVR3qrLlzMRMAHl1YcKfkI",
     "slug": "escolta_coffee_co"
   },
   {
@@ -33,7 +33,7 @@
     "description": "Based in the heart of Cebu City, Good Cup Coffee Co is a roastery & café that sources, imports, and roasts coffee beans from top farms in the Philippines & around the world and deliver them to our global customer base.",
     "instagram_username": "thegoodcupcoffeeco",
     "logo_url": "https://scontent.fmnl17-1.fna.fbcdn.net/v/t39.30808-6/350941791_1034638870841725_5474747716227878632_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=BOe3sb3CJD8Q7kNvgFVwDWN&_nc_zt=23&_nc_ht=scontent.fmnl17-1.fna&_nc_gid=A9s-7GH3IEJSWWloajSddrl&oh=00_AYAdZxtARTxxrfW-99jhOdeThGYk6go0OXkVSGVHCxIZdg&oe=675388BF",
-    "google_maps_query": "place_id:ChIJqR3f-o6ZqTMRYHtjUIbzJ4Q&key=AIzaSyDNBYlipVU0Me7GkkIppvbqSoBPurF7uuU",
+    "google_maps_query": "place_id:ChIJqR3f-o6ZqTMRYHtjUIbzJ4Q",
     "slug": "good_cup"
   },
   {
@@ -42,7 +42,7 @@
     "description": "Our mission is to serve great coffee, and to make great coffee accessible to everyone. We make sure to guide you in every step of your coffee journey, from sourcing, roasting, and supply to training and education.",
     "instagram_username": "plainsightcoffee",
     "logo_url": "https://plainsight.coffee/cdn/shop/files/Plain_Sight-Logo-02.png?v=1700129593",
-    "google_maps_query": "place_id:ChIJG8vHaTrIlzMRvtzjd0RAQKs&key=AIzaSyDNBYlipVU0Me7GkkIppvbqSoBPurF7uuU",
+    "google_maps_query": "place_id:ChIJG8vHaTrIlzMRvtzjd0RAQKs",
     "slug": "plain_sight"
   },
   {
