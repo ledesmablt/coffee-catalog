@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { Brand, Product } from '../../_types/schema'
 import { ProductCard } from '../../_components/ProductCard'
@@ -53,6 +53,8 @@ export interface Props {
 }
 export const Content = ({ brands }: Props) => {
   const placeholder = brands[0].name
+  const resultsRef = useRef<HTMLDivElement>(null)
+  const [scrollToResults, setScrollToResults] = useState(false)
 
   const router = useRouter()
   const query = useSearchParams()
@@ -69,13 +71,25 @@ export const Content = ({ brands }: Props) => {
     },
   })
 
+  useEffect(() => {
+    if (!resultsRef.current || !scrollToResults) {
+      return
+    }
+
+    resultsRef.current.scrollIntoView({ behavior: 'instant' })
+    setScrollToResults(false)
+  }, [scrollToResults, resultsRef])
+
   const onSubmit = (values: FormValues) => {
     if (values.q !== filters.q) {
       // reset to first page if search input changed
       values.page = 1
     }
+    if (values.page !== filters.page) {
+      setScrollToResults(true)
+    }
     const newQuery = filtersToQuery(values)
-    router.push(`${window.location.pathname}?${newQuery}`)
+    router.push(`${window.location.pathname}?${newQuery}`, { scroll: false })
   }
 
   const selectedBrand = brands.find((brand) => filters.brand === brand.slug)
@@ -132,7 +146,7 @@ export const Content = ({ brands }: Props) => {
             aria-label='selected brand info'
             className='w-full border rounded px-8 py-4 flex flex-col items-center gap-2'
           >
-            <div className='min-h-16 max-h-32 flex justify-center mb-4'>
+            <div className='h-24 flex justify-center mb-4'>
               <ImageWithFallback
                 src={selectedBrand.logo_url}
                 backgroundColor={selectedBrand.logo_background_color}
@@ -184,7 +198,7 @@ export const Content = ({ brands }: Props) => {
       {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
 
       {!!data?.data && (
-        <section aria-label='product results' className='flex flex-col items-center gap-4 my-6'>
+        <section aria-label='product results' className='flex flex-col items-center gap-4 my-6' ref={resultsRef}>
           <Pagination
             currentPage={filters.page}
             maxPages={data.maxPages}
