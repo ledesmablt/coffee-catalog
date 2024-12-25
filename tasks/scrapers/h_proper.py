@@ -1,4 +1,5 @@
 import json
+import re
 import requests
 from bs4 import BeautifulSoup
 from tasks.shared.product import Product
@@ -55,11 +56,20 @@ def extract_description(soup):
     return None
 
 def extract_specifications(soup):
-    desc = soup.find('div', class_='product-description')
+    new_str = re.sub(r'<br\s+[^>]*>', '\n', str(soup))
+    new_soup = BeautifulSoup(new_str, 'html.parser')
+    desc = cast(Any, new_soup.find('div', class_='product-description'))
     if not desc or not desc.text.strip():
         return None
 
-    return '\n'.join([s.text for s in desc.find_all('p')])
+    output = []
+    for line in desc.find_all('p'):
+        for br in line.find_all('br'):
+            br.replace_with("\n")
+
+        output.append(line.text)
+
+    return '\n'.join(output)
 
 def extract_sku():
     # NOTE: nevermind
