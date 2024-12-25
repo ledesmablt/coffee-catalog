@@ -53,14 +53,18 @@ def extract_title(soup):
 
 
 def extract_description(soup):
-    return None
-
-def extract_specifications(soup):
     desc = soup.find('div', class_='tt-collapse-content')
     if not desc or not desc.text.strip():
         return None
 
-    return desc.text.strip()
+    return '\n'.join([s.text for s in desc.find_all('p', attrs={'data-mce-fragment': None})])
+
+def extract_specifications(soup):
+    spec = soup.find('div', class_='tt-collapse-content')
+    if not spec or not spec.text.strip():
+        return None
+
+    return '\n\n'.join([s.text for s in spec.find_all('p', attrs={'data-mce-fragment': '1'})])
 
 def extract_sku():
     # NOTE: nevermind
