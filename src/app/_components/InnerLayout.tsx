@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Nav } from './Nav'
 import { Footer } from './Footer'
+import { Suspense } from 'react'
 
 const queryClient = new QueryClient()
 
@@ -16,7 +17,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           className='flex flex-col items-center gap-2 my-8 w-[90%] max-w-[576px] md:max-w-[960px]'
         >
           <Nav />
-          {children}
+          <Suspense>{children}</Suspense>
           <Footer />
         </div>
       </main>
