@@ -4,15 +4,11 @@ from bs4 import BeautifulSoup
 from tasks.shared.product import Product
 from typing import cast, Any
 
-BASE_URL = 'https://plainsight.coffee'
+BASE_URL = 'https://www.cremaandcream.ph'
 COLLECTION_URL = BASE_URL + '/collections/coffee'
-FILENAME = 'data/scrapers/plain_sight.json'
-BRAND_NAME = 'Plain Sight'
-BLACKLIST_WORDS = [
-    'merch box',
-    'workshop',
-    '1919 chocolate',
-]
+FILENAME = 'data/scrapers/crema_and_cream.json'
+BRAND_NAME = 'Crema & Cream'
+BLACKLIST_WORDS = []
 
 def load_collection(url: str):
     res = requests.get(url)
@@ -20,7 +16,7 @@ def load_collection(url: str):
     return cast(Any, soup)
 
 def is_blacklist(product_card):
-    title = product_card.find('h3')
+    title = product_card.find('h2')
     if not title:
         return
 
@@ -31,18 +27,18 @@ def get_product_urls(soup):
     current_soup = soup
     product_urls = []
     while True:
-        container = cast(Any, current_soup.find('ul', id='product-grid'))
-        products = container.find_all('li', class_='grid__item')
+        container = cast(Any, current_soup.find('div', class_='tt-product-listing'))
+        products = container.find_all('div', class_='tt-col-item')
         for product_card in products:
             if not is_blacklist(product_card):
-                product_urls.append(BASE_URL + product_card.find('a')['href'])
+                product_urls.append(BASE_URL + product_card.find('h2').find('a')['href'])
 
-        next_page = current_soup.find('a', attrs={'aria-label': 'Next page'})
+        next_page = False # current_soup.find('a', attrs={'aria-label': 'Next page'})
         if not next_page:
             break
 
-        res = requests.get(BASE_URL + cast(str, next_page['href']))
-        current_soup = BeautifulSoup(res.text, 'html.parser')
+        # res = requests.get(BASE_URL + cast(str, next_page['href']))
+        # current_soup = BeautifulSoup(res.text, 'html.parser')
 
     return product_urls
 
@@ -57,58 +53,27 @@ def extract_title(soup):
 
 
 def extract_description(soup):
-    desc = soup.find('div', class_='product__description')
+    return None
+
+def extract_specifications(soup):
+    desc = soup.find('div', class_='tt-collapse-content')
     if not desc or not desc.text.strip():
         return None
 
     return desc.text.strip()
-
-def extract_specifications(soup):
-    section = soup.find('div', class_='custom-section')
-    if not section:
-        breakpoint()
-        return None
-
-    subsections = section.find_all('div', class_='custom-container')
-    all_items = []
-    for item in subsections:
-        label = item.find('h5').text
-        value = ', '.join([x.text for x in item.find_all('p') if x.text])
-        all_items.append(f"{label}: {value}".capitalize())
-
-    subsections = section.find_all('div', class_='column')
-    all_items = []
-    for item in subsections:
-        label = item.find('h5')
-        if not label:
-            continue
-
-        label = label.text.capitalize()
-        progress = item.find('progress')
-        p = item.find('p')
-        value = ''
-        if progress:
-            value = str(int(float(progress.text))) + '%'
-        if p:
-            value = p.text
-
-        if value:
-            all_items.append(f"{label}: {value}")
-
-    return '\n'.join(all_items) or None
 
 def extract_sku():
     # NOTE: nevermind
     return None
 
 def parse_product(soup, shopify_url):
-    info_section = soup.find('product-info')
+    info_section = soup.find('div', class_='tt-product-single-info')
     title = extract_title(info_section)
     description = extract_description(soup)
     specifications = extract_specifications(soup)
     sku = extract_sku()
 
-    media_section = soup.find('div', class_='product__media')
+    media_section = soup.find('div', class_='product-images-static')
     img = media_section.find('img')
     image_url = 'https:' + img['src'] if img else None
 
@@ -145,4 +110,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
