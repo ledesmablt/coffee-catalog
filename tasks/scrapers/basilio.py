@@ -2,7 +2,7 @@ import json
 import re
 import requests
 from bs4 import BeautifulSoup
-from tasks.coffee_catalog.shared.product import Product
+from tasks.shared.product import Product
 from typing import cast, Any
 
 BASE_URL = 'https://botecentral.com'

@@ -2,12 +2,12 @@ import json
 import re
 import requests
 from bs4 import BeautifulSoup
-from tasks.coffee_catalog.shared.product import Product
+from tasks.shared.product import Product
 
-BASE_URL = 'https://escoltacoffee.co'
-ENTRYPOINT = BASE_URL + '/collections/coffee'
-FILENAME = 'data/scrapers/escolta_coffee_co.json'
-BRAND_NAME = 'Escolta Coffee Company'
+BASE_URL = 'https://store.yardstickcoffee.com'
+ENTRYPOINT = BASE_URL + '/collections/coffees'
+FILENAME = 'data/scrapers/yardstick.json'
+BRAND_NAME = 'Yardstick'
 
 def load_entrypoint():
     res = requests.get(ENTRYPOINT)
@@ -15,35 +15,32 @@ def load_entrypoint():
 
 def get_products(soup):
     # NOTE: there aren't enough products for there to be multiple pages
-    container = soup.find('ul', id='product-grid')
-    return container.find_all('li')
+    container = soup.find('div', id='ShopProducts')
+    return container.find_all('product-card')
 
 def load_product(product_card):
-    product_url = BASE_URL + product_card.find('div', class_='card__information').find('a')['href']
+    product_url = BASE_URL + product_card['data-url']
     res = requests.get(product_url)
     soup = BeautifulSoup(res.text, 'html.parser')
     return parse_product(soup, product_url)
 
-def extract_specifications(soup):
-    if not soup or not soup.text.strip():
-        return None
-
-    # fix spaces and remove duplicate newlines
-    stripped_str = re.sub(r'\xa0', ' ', soup.text.strip())
-    return '\n'.join([s for s in stripped_str.split('\n') if s])
+def extract_text(soup):
+    # some of the <br>'s are broken or misplaced
+    new_str = re.sub(r'<br\s*/?>', '\n', str(soup).replace('</br>', ''))
+    new_soup = BeautifulSoup(new_str, 'html.parser')
+    return new_soup.text.strip()
 
 def parse_product(soup, shopify_url):
-    info_section = soup.find('div', class_='product__info-wrapper')
+    info_section = soup.find('product-info')
     title = info_section.find('h1').text
 
-    description = None
-    specifications = extract_specifications(info_section.find('div', class_='product__description'))
-    sku_match = re.search(r'--(\d+)__', soup.find('product-info')['id'])
-    sku = sku_match.group(1) if sku_match else None
+    description = extract_text(info_section.find('div', class_='product-content-tab__content'))
+    specifications = extract_text(info_section.find('div', class_='product-information-tag__body'))
+    sku = info_section.find('product-form')['data-product-id']
 
-    media_section = soup.find('media-gallery')
-    img = media_section.find('img')
-    image_url = 'https:' + img['src'] if img else None
+    media_section = soup.find('div', attrs={'data-product-media-container': True})
+    image_src = media_section.find('img')['src']
+    image_url = 'https:' + image_src
 
     print(f"parsed product: {title}")
     return Product(
@@ -70,4 +67,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

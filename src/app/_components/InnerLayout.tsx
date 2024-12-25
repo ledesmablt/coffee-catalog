@@ -1,8 +1,8 @@
 'use client'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Nav } from './_components/Nav'
-import { Footer } from './_components/Footer'
+import { Nav } from './Nav'
+import { Footer } from './Footer'
 
 const queryClient = new QueryClient()
 

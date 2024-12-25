@@ -1,6 +1,6 @@
 import OpenAI from 'openai'
 import { applyStringFilter, SearchFilterFn } from '../../_shared/filters'
-import { loadProducts } from '@/app/coffee_catalog/_shared/loaders/products'
+import { loadProducts } from '@/app/_shared/loaders/products'
 
 const openAIClient = new OpenAI({ apiKey: process.env['OPENAI_API_KEY'] })
 const OPENAI_EMBEDDING_SETTINGS = {

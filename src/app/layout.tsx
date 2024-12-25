@@ -1,16 +1,11 @@
 import './globals.css'
 import type { Metadata } from 'next'
-
-const BASE_URL = 'https://ledesmablt.com'
+import InnerLayout from './_components/InnerLayout'
 
 export const metadata: Metadata = {
-  title: 'Benj Ledesma',
-  description: 'i like building useful things.',
-  openGraph: {
-    url: BASE_URL,
-    title: 'Benj Ledesma',
-    images: `${BASE_URL}/images/me.jpeg`,
-  },
+  title: 'Coffee Catalog PH',
+  description: 'Coffee Catalog PH',
+  openGraph: {},
 }
 
 export default function RootLayout({
@@ -20,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body>{children}</body>
+      <body>
+        <InnerLayout>{children}</InnerLayout>
+      </body>
     </html>
   )
 }

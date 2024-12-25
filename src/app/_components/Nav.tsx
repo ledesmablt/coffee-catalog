@@ -1,19 +1,24 @@
-'use client'
-
 import Link from 'next/link'
+
+const LINKS = [
+  {
+    href: '/',
+    label: 'home',
+  },
+  {
+    href: '/browse',
+    label: 'browse',
+  },
+] as const
 
 export const Nav = () => {
   return (
-    <section className='w-full flex gap-2 mb-2'>
-      <Link className='underline' href='/'>
-        home
-      </Link>
-      <Link className='underline' href='/blog' target='_blank' rel='noreferrer'>
-        blog
-      </Link>
-      <a className='underline' href='mailto:benj.ledesma@gmail.com' target='_blank' rel='noreferrer'>
-        contact
-      </a>
-    </section>
+    <nav className='flex gap-3 mb-8'>
+      {LINKS.map((link) => (
+        <Link className='text-zinc-600 hover:text-zinc-900 transition-colors' href={link.href} key={link.label}>
+          {link.label}
+        </Link>
+      ))}
+    </nav>
   )
 }

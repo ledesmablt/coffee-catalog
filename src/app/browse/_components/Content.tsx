@@ -64,7 +64,7 @@ export const Content = ({ brands }: Props) => {
   const { data, isLoading } = useQuery({
     queryKey: ['/api/products', query.toString()],
     queryFn: async () => {
-      const res = await fetch(`/coffee_catalog/api/products?${query.toString()}`)
+      const res = await fetch(`/api/products?${query.toString()}`)
       return (await res.json()) as { data: Product[]; maxPages: number }
     },
   })
