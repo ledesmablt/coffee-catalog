@@ -1,1 +1,3 @@
 data/**.json
+drizzle/**/*
+tsconfig.json
