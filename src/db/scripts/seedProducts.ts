@@ -5,6 +5,7 @@ import { db } from '..'
 import { brands as brandsTable, products as productsTable } from '../schema'
 
 const main = async () => {
+  // TODO: dont re-seed any duplicate urls
   const rootPath = process.cwd()
   const dataPath = nodePath.join(rootPath, 'data', 'merged_data.json')
   const fileContent = await fs.readFile(dataPath, 'utf8')
