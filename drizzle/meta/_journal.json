@@ -22,6 +22,13 @@
       "when": 1735307763350,
       "tag": "0002_lyrical_warlock",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1735308393203,
+      "tag": "0003_exotic_vector",
+      "breakpoints": true
     }
   ]
 }

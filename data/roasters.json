@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "name": "Yardstick",
+    "shop_url": "https://store.yardstickcoffee.com/",
+    "description": "Yardstick is a Specialty Coffee roasting company operating since 2013 out of Manila, Philippines. We are in the constant pursuit of pushing the envelope to keep increasing the ‘yardstick’ of what coffee means for the coffee industry and enthusiasts in the Philippines.",
+    "instagram_username": "yardstickcoffee",
+    "logo_url": "https://store.yardstickcoffee.com/cdn/shop/files/Yardstick_Logo_Long_Colour.png?v=1711439110&width=320",
+    "google_maps_query": "place_id:ChIJzYhojg7JlzMReOOd-mRcuU8&key=AIzaSyDNBYlipVU0Me7GkkIppvbqSoBPurF7uuU",
+    "state": "Metro Manila",
+    "slug": "yardstick"
+  },
+  {
+    "name": "H Proper",
+    "shop_url": "https://hproper.com",
+    "description": "H PROPER COFFEE ROASTERS is a third-wave specialty café & roastery located in Cagayan de Oro City, Mindanao, Philippines. We are ready to serve you with only best ingredients that we can source around the globe.",
+    "instagram_username": "HproperCoffeeRoasters",
+    "logo_url": "https://hproper.com/cdn/shop/files/HProperCoffeeRoasters_SecondaryLogo-0-WHITE1_225x@2x.png?v=1656917300",
+    "logo_background_color": "black",
+    "google_maps_query": "place_id:ChIJpbYZCgDJlzMRII4Mn0CLyOo",
+    "slug": "h_proper"
+  }
+]

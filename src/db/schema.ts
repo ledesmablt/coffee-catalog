@@ -11,7 +11,7 @@ export const brands = schema.table('brands', {
     .notNull()
     .$onUpdate(() => new Date()),
   name: varchar().notNull(),
-  slug: varchar().notNull(),
+  slug: varchar().notNull().unique(),
   shop_url: varchar(),
   description: text(),
   instagram_username: varchar(),

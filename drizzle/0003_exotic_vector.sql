@@ -1,0 +1,1 @@
+ALTER TABLE "coffee_catalog"."brands" ADD CONSTRAINT "brands_slug_unique" UNIQUE("slug");
