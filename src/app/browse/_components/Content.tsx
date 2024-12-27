@@ -3,7 +3,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import type { Brand, Product } from '../../_types/schema'
+import type { Product } from '../../_types/schema'
+import type { Brand } from '@/db/schema'
 import { ProductCard } from '../../_components/ProductCard'
 import { type ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/navigation'
 import { Pagination } from './Pagination'
@@ -148,8 +149,8 @@ export const Content = ({ brands }: Props) => {
           >
             <div className='h-24 flex justify-center mb-4'>
               <ImageWithFallback
-                src={selectedBrand.logo_url}
-                backgroundColor={selectedBrand.logo_background_color}
+                src={selectedBrand.logo_url ?? ''}
+                backgroundColor={selectedBrand.logo_background_color ?? ''}
                 alt={`${selectedBrand.name} logo`}
                 className='object-contain'
               />
