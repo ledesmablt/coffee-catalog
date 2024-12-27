@@ -1,0 +1,2 @@
+ALTER TABLE "coffee_catalog"."products" ADD COLUMN "embedding" vector(512);--> statement-breakpoint
+CREATE INDEX "embeddingIndex" ON "coffee_catalog"."products" USING hnsw ("embedding" vector_cosine_ops);

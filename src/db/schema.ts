@@ -1,4 +1,4 @@
-import { integer, pgSchema, varchar, text, timestamp } from 'drizzle-orm/pg-core'
+import { integer, pgSchema, varchar, text, timestamp, vector, index } from 'drizzle-orm/pg-core'
 
 const SCHEMA_NAME = 'coffee_catalog'
 
@@ -22,21 +22,29 @@ export const brands = schema.table('brands', {
 
 export type Brand = typeof brands.$inferSelect
 
-export const products = schema.table('products', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  created_at: timestamp().defaultNow().notNull(),
-  updated_at: timestamp()
-    .notNull()
-    .$onUpdate(() => new Date()),
-  title: varchar().notNull(),
-  brand_id: integer()
-    .references(() => brands.id, { onDelete: 'cascade' })
-    .notNull(),
-  sku: varchar(),
-  description: text(),
-  specifications: text(),
-  image_url: text(),
-  ecommerce_url: text(),
-})
+export const products = schema.table(
+  'products',
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    created_at: timestamp().defaultNow().notNull(),
+    updated_at: timestamp()
+      .notNull()
+      .$onUpdate(() => new Date()),
+    title: varchar().notNull(),
+    brand_id: integer()
+      .references(() => brands.id, { onDelete: 'cascade' })
+      .notNull(),
+    sku: varchar(),
+    description: text(),
+    specifications: text(),
+    image_url: text(),
+    ecommerce_url: text(),
+    // for # of dimensions, see OPENAI_EMBEDDING_SETTINGS
+    embedding: vector('embedding', { dimensions: 512 }),
+  },
+  (table) => ({
+    embeddingIndex: index('embeddingIndex').using('hnsw', table.embedding.op('vector_cosine_ops')),
+  }),
+)
 
 export type Product = typeof products.$inferSelect
