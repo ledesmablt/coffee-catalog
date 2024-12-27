@@ -2,7 +2,7 @@ import nodePath from 'path'
 import { promises as fs } from 'fs'
 
 import { db } from '..'
-import { shops } from '../schema'
+import { brands } from '../schema'
 
 const main = async () => {
   const rootPath = process.cwd()
@@ -10,8 +10,8 @@ const main = async () => {
   const fileContent = await fs.readFile(dataPath, 'utf8')
 
   const values = JSON.parse(fileContent)
-  const result = await db.insert(shops).values(values).returning({ insertedId: shops.id })
-  console.log(`inserted ${result.length} rows into 'shops'`)
+  const result = await db.insert(brands).values(values).returning({ insertedId: brands.id })
+  console.log(`inserted ${result.length} rows into 'brands'`)
 }
 
 main()

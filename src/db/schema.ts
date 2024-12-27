@@ -4,7 +4,7 @@ const SCHEMA_NAME = 'coffee_catalog'
 
 const schema = pgSchema(SCHEMA_NAME)
 
-export const shops = schema.table('shops', {
+export const brands = schema.table('brands', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   created_at: timestamp().defaultNow().notNull(),
   updated_at: timestamp()
@@ -20,6 +20,8 @@ export const shops = schema.table('shops', {
   google_maps_query: text(),
 })
 
+export type Brand = typeof brands.$inferSelect
+
 export const products = schema.table('products', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   created_at: timestamp().defaultNow().notNull(),
@@ -27,8 +29,8 @@ export const products = schema.table('products', {
     .notNull()
     .$onUpdate(() => new Date()),
   title: varchar().notNull(),
-  shop_id: integer()
-    .references(() => shops.id, { onDelete: 'cascade' })
+  brand_id: integer()
+    .references(() => brands.id, { onDelete: 'cascade' })
     .notNull(),
   sku: varchar(),
   description: text(),
@@ -36,3 +38,5 @@ export const products = schema.table('products', {
   image_url: text(),
   ecommerce_url: text(),
 })
+
+export type Product = typeof products.$inferSelect

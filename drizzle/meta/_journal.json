@@ -15,6 +15,13 @@
       "when": 1735306879914,
       "tag": "0001_tan_morlun",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1735307763350,
+      "tag": "0002_lyrical_warlock",
+      "breakpoints": true
     }
   ]
 }
