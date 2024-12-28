@@ -2,7 +2,7 @@ import { integer, pgSchema, varchar, text, timestamp, vector, index } from 'driz
 
 const SCHEMA_NAME = 'coffee_catalog'
 
-const schema = pgSchema(SCHEMA_NAME)
+export const schema = pgSchema(SCHEMA_NAME)
 
 export const brands = schema.table('brands', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

@@ -9,7 +9,7 @@ import { ProductCard } from '../../_components/ProductCard'
 import { type ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/navigation'
 import { Pagination } from './Pagination'
 import { InstagramIcon, ShoppingBagIcon } from 'lucide-react'
-import { GOOGLE_MAPS_API_KEY } from '../../_shared/env'
+import { GOOGLE_MAPS_API_KEY } from '@/lib/env'
 import { ImageWithFallback } from '../../_components/ImageWithFallback'
 
 interface FormValues {
