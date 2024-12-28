@@ -1,38 +1,52 @@
-import { loadBrands } from '../../_shared/loaders/brands'
-import { loadProducts } from '../../_shared/loaders/products'
-import { applyStringFilter } from '../_shared/filters'
+import { db } from '@/db'
+import { brands, products } from '@/db/schema'
+import { and, count, eq, getTableColumns, ilike, or } from 'drizzle-orm'
 
-const LIMIT = 6
+const DEFAULT_PAGE_SIZE = 6
 
 export const GET = async (req: Request): Promise<Response> => {
   const { searchParams } = new URL(req.url)
 
-  // NOTE: very crude, let's do it better with a db next time
-  let products = await loadProducts()
-  const brands = await loadBrands()
-  // filter by brand
-  // filter by matching keywords
-  const brandSlug = searchParams.get('brand')?.toLowerCase()
-  if (brandSlug) {
-    const brand = brands.find((b) => b.slug === brandSlug)
-    if (brand) {
-      products = products.filter((p) => p.brand === brand.name)
-    } else {
-      products = []
-    }
-  }
+  const { embedding: _embedding, ...selectedColumns } = getTableColumns(products)
 
+  // TODO: refactor this to be more palatably DRY
+  const selectQuery = db
+    .select({
+      ...selectedColumns,
+      brand: brands.name,
+    })
+    .from(products)
+    .innerJoin(brands, eq(products.brand_id, brands.id))
+  const countQuery = db
+    .select({
+      total: count(),
+    })
+    .from(products)
+    .innerJoin(brands, eq(products.brand_id, brands.id))
+
+  // NOTE: $dynamic doesn't quite work
+  const ands = []
   const q = searchParams.get('q')?.toLowerCase()
   if (q) {
-    products = await applyStringFilter(q, products)
+    const likeString = `%${q}%`
+    ands.push(or(ilike(products.title, likeString), ilike(products.title, likeString)))
+  }
+  const brandSlug = searchParams.get('brand')?.toLowerCase()
+  if (brandSlug) {
+    ands.push(eq(brands.slug, brandSlug))
   }
 
-  const maxPages = Math.ceil(products.length / LIMIT)
+  selectQuery.where(and(...ands))
+  countQuery.where(and(...ands))
+
+  const pageSize = Number(searchParams.get('limit') ?? DEFAULT_PAGE_SIZE)
   const page = Number(searchParams.get('page') ?? 1)
   const offset = page - 1
-  products = products.slice(offset * LIMIT, (offset + 1) * LIMIT)
+  const queryResult = await selectQuery.limit(pageSize).offset(offset * pageSize)
+  const [{ total }] = await countQuery
+  const maxPages = Math.ceil(total / pageSize)
 
-  const responseBody = { data: products, maxPages }
+  const responseBody = { data: queryResult, total, maxPages }
   return new Response(JSON.stringify(responseBody), {
     headers: {
       'Content-Type': 'application/json',
