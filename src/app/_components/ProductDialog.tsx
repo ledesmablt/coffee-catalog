@@ -1,3 +1,4 @@
+import React from 'react'
 import { ShoppingCart } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -8,6 +9,17 @@ interface ProductDialogProps {
   product: Product
   open: boolean
   onOpenChange: (open: boolean) => void
+}
+
+const breakLines = (text: string, key: string) => {
+  // get rid of huge chunks of whitespace from 3+ newlines
+  const lines = text.replace(/\n{3,}/g, '\n\n').split('\n')
+  return lines.map((line, index) => (
+    <React.Fragment key={`${key}:${index}`}>
+      {line}
+      {index < lines.length - 1 && <br />}
+    </React.Fragment>
+  ))
 }
 
 export const ProductDialog = ({ product, open, onOpenChange }: ProductDialogProps) => {
@@ -26,13 +38,15 @@ export const ProductDialog = ({ product, open, onOpenChange }: ProductDialogProp
             {product.description && (
               <div>
                 <h3 className='font-semibold mb-2'>Description</h3>
-                <p className='text-gray-600'>{product.description}</p>
+                <p className='text-gray-600'>{breakLines(product.description, 'product-modal-description-line')}</p>
               </div>
             )}
             {product.specifications && (
               <div>
                 <h3 className='font-semibold mb-2'>Specifications</h3>
-                <p className='text-gray-600'>{product.specifications}</p>
+                <p className='text-gray-600'>
+                  {breakLines(product.specifications, 'product-modal-specifications-line')}
+                </p>
               </div>
             )}
             <a
