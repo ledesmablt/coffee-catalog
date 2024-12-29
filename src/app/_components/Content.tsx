@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form'
 import type { Product } from '../_types/schema'
 import { ProductGrid } from './ProductGrid'
 import { type ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/navigation'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 const PLACEHOLDERS = [
   'sweet and delicate flavors',
@@ -79,17 +81,19 @@ export const Content = () => {
     <>
       <h1 className='text-3xl font-light'>Coffee Catalog</h1>
       <section className='flex flex-col items-center'>
-        <form className='flex flex-col items-center mt-4 gap-3' onSubmit={onSubmit}>
-          <p className='text-lg'>{"I'm looking for..."}</p>
-          <input
+        <form className='flex flex-col items-center mt-4 gap-1' onSubmit={onSubmit}>
+          <Label className='text-md mb-1' htmlFor={register('q').name}>
+            {"I'm looking for..."}
+          </Label>
+          <Input
             type='text'
             placeholder={placeholder}
-            className='w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
+            className='text-md md:text-md w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
             {...register('q')}
           />
           <button
             type='submit'
-            className='px-4 py-1 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors'
+            className='mt-2 px-4 py-1 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors'
           >
             search
           </button>

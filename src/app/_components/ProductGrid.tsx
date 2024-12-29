@@ -11,9 +11,9 @@ interface Props {
 export const ProductGrid = ({ products, isLoading, searchQuery }: Props) => {
   if (isLoading) {
     return (
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-full'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4 w-full justify-items-center'>
         {Array.from({ length: 3 }).map((_, index) => (
-          <Skeleton className='rounded-lg border w-full h-96' key={`product-skeleton:${index}`} />
+          <Skeleton className='rounded-lg border w-full max-w-sm h-96' key={`product-skeleton:${index}`} />
         ))}
       </div>
     )
