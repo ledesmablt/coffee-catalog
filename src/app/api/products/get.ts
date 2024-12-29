@@ -1,6 +1,6 @@
 import { db } from '@/db'
 import { brands, products } from '@/db/schema'
-import { and, count, eq, getTableColumns, ilike, or } from 'drizzle-orm'
+import { and, count, eq, getTableColumns, sql } from 'drizzle-orm'
 import { buildHeaders } from '../_shared/headers'
 
 const DEFAULT_PAGE_SIZE = 6
@@ -29,8 +29,7 @@ export const GET = async (req: Request): Promise<Response> => {
   const ands = []
   const q = searchParams.get('q')?.toLowerCase()
   if (q) {
-    const likeString = `%${q}%`
-    ands.push(or(ilike(products.title, likeString), ilike(products.title, likeString)))
+    ands.push(sql`${products.text_search} @@ phraseto_tsquery('english', ${q})`)
   }
   const brandSlug = searchParams.get('brand')?.toLowerCase()
   if (brandSlug) {

@@ -1,8 +1,15 @@
-import { integer, pgSchema, varchar, text, timestamp, vector, index } from 'drizzle-orm/pg-core'
+import { SQL, sql } from 'drizzle-orm'
+import { integer, pgSchema, varchar, text, timestamp, vector, index, customType } from 'drizzle-orm/pg-core'
 
 const SCHEMA_NAME = 'coffee_catalog'
 
 export const schema = pgSchema(SCHEMA_NAME)
+
+const tsVector = customType<{ data: string }>({
+  dataType() {
+    return 'tsvector'
+  },
+})
 
 export const brands = schema.table('brands', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -41,9 +48,14 @@ export const products = schema.table(
     ecommerce_url: text(),
     // for # of dimensions, see OPENAI_EMBEDDING_SETTINGS
     embedding: vector('embedding', { dimensions: 512 }),
+    text_search: tsVector('text_search').generatedAlwaysAs((): SQL => {
+      return sql`to_tsvector('english', ${products.title} || ' ' || COALESCE(${products.description}, '') || ' ' || COALESCE(${products.specifications}, ''))`
+    }),
   },
   (table) => ({
+    // TODO rename to snake-case
     embeddingIndex: index('embeddingIndex').using('hnsw', table.embedding.op('vector_cosine_ops')),
+    text_search_index: index('text_search_index').using('gin', table.text_search),
   }),
 )
 

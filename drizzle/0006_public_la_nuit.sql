@@ -1,0 +1,2 @@
+ALTER TABLE "coffee_catalog"."products" ADD COLUMN "text_search" "tsvector" GENERATED ALWAYS AS (to_tsvector('english', "coffee_catalog"."products"."title" || ' ' || COALESCE("coffee_catalog"."products"."description", '') || ' ' || COALESCE("coffee_catalog"."products"."specifications", ''))) STORED;--> statement-breakpoint
+CREATE INDEX "text_search_index" ON "coffee_catalog"."products" USING gin ("text_search");
