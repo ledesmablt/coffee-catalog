@@ -1,6 +1,7 @@
 import { db } from '@/db'
 import { brands, products } from '@/db/schema'
 import { and, count, eq, getTableColumns, ilike, or } from 'drizzle-orm'
+import { buildHeaders } from '../_shared/headers'
 
 const DEFAULT_PAGE_SIZE = 6
 
@@ -48,9 +49,7 @@ export const GET = async (req: Request): Promise<Response> => {
 
   const responseBody = { data: queryResult, total, maxPages }
   return new Response(JSON.stringify(responseBody), {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: buildHeaders(),
     status: 200,
   })
 }

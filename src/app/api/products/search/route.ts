@@ -2,6 +2,7 @@ import { generateEmbedding } from '@/lib/embedding'
 import { db } from '@/db'
 import { brands, products } from '@/db/schema'
 import { cosineDistance, desc, eq, getTableColumns, sql } from 'drizzle-orm'
+import { buildHeaders } from '../../_shared/headers'
 
 const LIMIT = 3
 
@@ -31,9 +32,7 @@ export const GET = async (req: Request): Promise<Response> => {
 
   const responseBody = { data: topResults }
   return new Response(JSON.stringify(responseBody), {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: buildHeaders({ cacheDuration: 3600 }),
     status: 200,
   })
 }
