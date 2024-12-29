@@ -196,27 +196,23 @@ export const Content = ({ brands }: Props) => {
         )}
       </section>
 
-      {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
-
-      {!!data?.data && (
-        <section aria-label='product results' className='flex flex-col items-center gap-4 my-6' ref={resultsRef}>
-          <Pagination
-            currentPage={filters.page}
-            maxPages={data.maxPages}
-            onChangePage={(newPage) => {
-              onSubmit({ ...filters, page: newPage })
-            }}
-          />
-          <ProductGrid products={data.data} isLoading={isLoading} searchQuery={filters.q} />
-          <Pagination
-            currentPage={filters.page}
-            maxPages={data.maxPages}
-            onChangePage={(newPage) => {
-              onSubmit({ ...filters, page: newPage })
-            }}
-          />
-        </section>
-      )}
+      <section aria-label='product results' className='flex flex-col items-center gap-4 my-6' ref={resultsRef}>
+        <Pagination
+          currentPage={filters.page}
+          maxPages={data?.maxPages ?? 0}
+          onChangePage={(newPage) => {
+            onSubmit({ ...filters, page: newPage })
+          }}
+        />
+        <ProductGrid products={data?.data} isLoading={isLoading} searchQuery={filters.q} />
+        <Pagination
+          currentPage={filters.page}
+          maxPages={data?.maxPages ?? 0}
+          onChangePage={(newPage) => {
+            onSubmit({ ...filters, page: newPage })
+          }}
+        />
+      </section>
     </>
   )
 }

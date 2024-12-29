@@ -9,7 +9,6 @@ interface Props {
 }
 
 export const ProductCard = ({ product }: Props) => {
-  // TODO: placeholder image for broken or missing images
   return (
     <Card className='w-full max-w-sm overflow-hidden flex flex-col'>
       <CardHeader className='p-0'>

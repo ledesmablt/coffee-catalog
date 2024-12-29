@@ -96,6 +96,9 @@ export const Content = () => {
         </form>
       </section>
 
+      {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
+      {!isLoading && <p className='mt-4 text-zinc-700'></p>}
+
       <ProductGrid products={data} isLoading={isLoading} />
     </>
   )
