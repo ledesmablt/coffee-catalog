@@ -5,12 +5,12 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { Product } from '../../_types/schema'
 import type { Brand } from '@/db/schema'
-import { ProductCard } from '../../_components/ProductCard'
 import { type ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/navigation'
-import { Pagination } from './Pagination'
+import { Pagination } from '@/app/_components/Pagination'
 import { InstagramIcon, ShoppingBagIcon } from 'lucide-react'
 import { GOOGLE_MAPS_API_KEY } from '@/lib/env'
 import { ImageWithFallback } from '../../_components/ImageWithFallback'
+import { ProductGrid } from '@/app/_components/ProductGrid'
 
 interface FormValues {
   q?: string
@@ -53,7 +53,7 @@ export interface Props {
   brands: Brand[]
 }
 export const Content = ({ brands }: Props) => {
-  const placeholder = brands[0].name
+  const placeholder = 'gesha natural'
   const resultsRef = useRef<HTMLDivElement>(null)
   const [scrollToResults, setScrollToResults] = useState(false)
 
@@ -97,7 +97,7 @@ export const Content = ({ brands }: Props) => {
 
   return (
     <>
-      <h1 className='text-2xl'>Browse Products</h1>
+      <h1 className='text-3xl font-light'>Browse all products</h1>
       <section aria-label='search input' className='flex flex-col items-center'>
         <form className='flex flex-col items-center mt-4 gap-3' onSubmit={handleSubmit(onSubmit)}>
           <p className='text-lg'>{"I'm looking for..."}</p>
@@ -207,11 +207,7 @@ export const Content = ({ brands }: Props) => {
               onSubmit({ ...filters, page: newPage })
             }}
           />
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4'>
-            {data.data.map((product) => {
-              return <ProductCard key={`product-${product.id}`} product={product} />
-            })}
-          </div>
+          <ProductGrid products={data.data} isLoading={isLoading} searchQuery={filters.q} />
           <Pagination
             currentPage={filters.page}
             maxPages={data.maxPages}

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { Product } from '../_types/schema'
-import { ProductCard } from './ProductCard'
+import { ProductGrid } from './ProductGrid'
 
 const PLACEHOLDERS = [
   'sweet and delicate flavors',
@@ -31,38 +31,36 @@ export const Content = () => {
     },
   })
 
-  // TODO: use default search params to show some results
-  const [searchParams, setSearchParams] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
   const { data, isLoading } = useQuery({
-    queryKey: ['/api/products/search', searchParams],
-    enabled: !!searchParams,
+    queryKey: ['/api/products/search', searchQuery],
+    enabled: !!searchQuery,
     queryFn: async () => {
-      if (!searchParams) {
+      if (!searchQuery) {
         return []
       }
 
-      // TODO: improve types
-      const res = await fetch(`/api/products/search?${searchParams}`)
+      const res = await fetch(`/api/products/search?${searchQuery}`)
       const { data } = await res.json()
       return data as Product[]
     },
   })
 
-  const onSubmit = handleSubmit(async (values) => {
+  const onSubmit = handleSubmit((values) => {
     const q = values.searchQuery || placeholder
     const filterType = values.enableSmartSuggestions ? 'similarity' : ''
     const params = new URLSearchParams({ q, filterType })
-    setSearchParams(params.toString())
-
-    // submit the placeholder if it doesn't
+    // submit the placeholder if it doesn't exist
     if (!values.searchQuery) {
       setValue('searchQuery', q)
     }
+
+    setSearchQuery(params.toString())
   })
 
   return (
     <>
-      <h1 className='text-2xl'>Coffee Catalog PH</h1>
+      <h1 className='text-3xl font-light'>Coffee Catalog</h1>
       <section className='flex flex-col items-center'>
         <form className='flex flex-col items-center mt-4 gap-3' onSubmit={onSubmit}>
           <p className='text-lg'>{"I'm looking for..."}</p>
@@ -79,17 +77,9 @@ export const Content = () => {
             search
           </button>
         </form>
-
-        {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
       </section>
 
-      {!!data && (
-        <section className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4'>
-          {data.map((product) => {
-            return <ProductCard key={`product-${product.id}`} product={product} />
-          })}
-        </section>
-      )}
+      <ProductGrid products={data} isLoading={isLoading} />
     </>
   )
 }
