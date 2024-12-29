@@ -52,15 +52,18 @@ export const Content = () => {
     defaultValues: filters,
   })
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['/api/products/search', query.toString()],
+    retry: false,
     enabled: !!query.get('q'),
     queryFn: async () => {
       if (!query.get('q')) {
         return []
       }
-
       const res = await fetch(`/api/products/search?${query.toString()}`)
+      if (!res.ok) {
+        throw new Error(`server error: ${await res.text()}`)
+      }
       const { data } = await res.json()
       return data as Product[]
     },
@@ -103,7 +106,13 @@ export const Content = () => {
       {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
       {!isLoading && <p className='mt-4 text-zinc-700'></p>}
 
-      <ProductGrid products={data} isLoading={isLoading} />
+      {error && (
+        <div className='text-zinc-600'>
+          <p>oops! something went wrong. please try again later.</p>
+          <p>Error message: {error.message}</p>
+        </div>
+      )}
+      {!error && <ProductGrid products={data} isLoading={isLoading} />}
     </>
   )
 }

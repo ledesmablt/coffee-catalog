@@ -66,10 +66,14 @@ export const Content = ({ brands }: Props) => {
     defaultValues: filters,
   })
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['/api/products', query.toString()],
+    retry: false,
     queryFn: async () => {
       const res = await fetch(`/api/products?${query.toString()}`)
+      if (!res.ok) {
+        throw new Error(`server error: ${await res.text()}`)
+      }
       return (await res.json()) as { data: Product[]; maxPages: number }
     },
   })
@@ -201,21 +205,31 @@ export const Content = ({ brands }: Props) => {
       </section>
 
       <section aria-label='product results' className='flex flex-col items-center gap-4 my-6' ref={resultsRef}>
-        <Pagination
-          currentPage={filters.page}
-          maxPages={data?.maxPages ?? 0}
-          onChangePage={(newPage) => {
-            onSubmit({ ...filters, page: newPage })
-          }}
-        />
-        <ProductGrid products={data?.data} isLoading={isLoading} searchQuery={filters.q} />
-        <Pagination
-          currentPage={filters.page}
-          maxPages={data?.maxPages ?? 0}
-          onChangePage={(newPage) => {
-            onSubmit({ ...filters, page: newPage })
-          }}
-        />
+        {error && (
+          <div className='text-zinc-600'>
+            <p>oops! something went wrong. please try again later.</p>
+            <p>Error message: {error.message}</p>
+          </div>
+        )}
+        {!error && (
+          <>
+            <Pagination
+              currentPage={filters.page}
+              maxPages={data?.maxPages ?? 0}
+              onChangePage={(newPage) => {
+                onSubmit({ ...filters, page: newPage })
+              }}
+            />
+            <ProductGrid products={data?.data} isLoading={isLoading} searchQuery={filters.q} />
+            <Pagination
+              currentPage={filters.page}
+              maxPages={data?.maxPages ?? 0}
+              onChangePage={(newPage) => {
+                onSubmit({ ...filters, page: newPage })
+              }}
+            />
+          </>
+        )}
       </section>
     </>
   )
