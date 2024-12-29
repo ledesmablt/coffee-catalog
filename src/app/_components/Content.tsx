@@ -1,10 +1,11 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import type { Product } from '../_types/schema'
 import { ProductGrid } from './ProductGrid'
+import { type ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/navigation'
 
 const PLACEHOLDERS = [
   'sweet and delicate flavors',
@@ -14,8 +15,24 @@ const PLACEHOLDERS = [
 ] as const
 
 interface FormValues {
-  searchQuery: string
-  enableSmartSuggestions: boolean
+  q?: string
+}
+
+const extractFilters = (query: ReadonlyURLSearchParams): FormValues => {
+  const data: FormValues = {}
+  const q = query.get('q')
+  if (q) {
+    data.q = q
+  }
+  return data
+}
+
+const filtersToQuery = (filters: FormValues): string => {
+  const query = new URLSearchParams()
+  if (filters.q) {
+    query.set('q', filters.q)
+  }
+  return query.toString()
 }
 
 export const Content = () => {
@@ -25,37 +42,37 @@ export const Content = () => {
     return PLACEHOLDERS[index]
   }, [])
 
+  const router = useRouter()
+  const query = useSearchParams()
+  const filters = useMemo(() => extractFilters(query), [query])
+
   const { handleSubmit, register, setValue } = useForm<FormValues>({
-    defaultValues: {
-      enableSmartSuggestions: true,
-    },
+    defaultValues: filters,
   })
 
-  const [searchQuery, setSearchQuery] = useState('')
   const { data, isLoading } = useQuery({
-    queryKey: ['/api/products/search', searchQuery],
-    enabled: !!searchQuery,
+    queryKey: ['/api/products/search', query.toString()],
+    enabled: !!query.get('q'),
     queryFn: async () => {
-      if (!searchQuery) {
+      if (!query.get('q')) {
         return []
       }
 
-      const res = await fetch(`/api/products/search?${searchQuery}`)
+      const res = await fetch(`/api/products/search?${query.toString()}`)
       const { data } = await res.json()
       return data as Product[]
     },
   })
 
   const onSubmit = handleSubmit((values) => {
-    const q = values.searchQuery || placeholder
-    const filterType = values.enableSmartSuggestions ? 'similarity' : ''
-    const params = new URLSearchParams({ q, filterType })
-    // submit the placeholder if it doesn't exist
-    if (!values.searchQuery) {
-      setValue('searchQuery', q)
+    const q = values.q || placeholder
+    const newQuery = filtersToQuery({ ...values, q })
+    // // submit the placeholder if it doesn't exist
+    if (!values.q) {
+      setValue('q', q)
     }
 
-    setSearchQuery(params.toString())
+    router.push(`${window.location.pathname}?${newQuery}`, { scroll: false })
   })
 
   return (
@@ -68,7 +85,7 @@ export const Content = () => {
             type='text'
             placeholder={placeholder}
             className='w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
-            {...register('searchQuery')}
+            {...register('q')}
           />
           <button
             type='submit'
