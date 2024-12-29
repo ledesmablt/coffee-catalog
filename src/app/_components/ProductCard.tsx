@@ -45,12 +45,14 @@ export const ProductCard = ({ product }: Props) => {
         </div>
       </CardContent>
       <CardFooter className='mt-2 p-4 pt-0 flex justify-between items-center'>
-        <Button asChild className='w-full'>
-          <a href={product.shopify_url} target='_blank' rel='noopener noreferrer' className='no-underline'>
-            View on Shopify
-            <ExternalLink className='h-4 w-4' />
-          </a>
-        </Button>
+        {product.ecommerce_url && (
+          <Button asChild className='w-full'>
+            <a href={product.ecommerce_url} target='_blank' rel='noopener noreferrer' className='no-underline'>
+              View on Shopify
+              <ExternalLink className='h-4 w-4' />
+            </a>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   )

@@ -2,7 +2,7 @@ export interface Product {
   id: number
   title: string
   brand: string
-  shopify_url: string
+  ecommerce_url?: string
   embedding: number[]
   sku?: number
   description?: string
