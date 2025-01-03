@@ -7,12 +7,22 @@ import type { Product } from '../../_types/schema'
 import type { Brand } from '@/db/schema'
 import { type ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/navigation'
 import { Pagination } from '@/app/_components/Pagination'
-import { InstagramIcon, ShoppingBagIcon } from 'lucide-react'
+import { InstagramIcon, ListFilterIcon, SearchIcon, ShoppingBagIcon } from 'lucide-react'
 import { GOOGLE_MAPS_API_KEY } from '@/lib/env'
 import { ImageWithFallback } from '../../_components/ImageWithFallback'
 import { ProductGrid } from '@/app/_components/ProductGrid'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 interface FormValues {
   q?: string
@@ -109,47 +119,53 @@ export const Content = ({ brands }: Props) => {
           <Label className='text-md mb-1' htmlFor={register('q').name}>
             {"I'm looking for..."}
           </Label>
-          <Input
-            type='text'
-            placeholder={placeholder}
-            className='text-md md:text-md w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
-            {...register('q')}
-          />
-          <button
-            type='submit'
-            className='mt-2 px-4 py-1 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors'
-          >
-            search
-          </button>
+          <div className='flex gap-2'>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant='outline' className='relative aspect-square px-2' aria-label='Show filters'>
+                  <ListFilterIcon />
+                  {selectedBrand && (
+                    <span className='absolute top-0 right-0 h-2 w-2 rounded-full bg-zinc-700 transform translate-x-1/2 -translate-y-1/2' />
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className='w-56' align='start'>
+                <DropdownMenuLabel>Brands</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={filters.brand ?? ''}
+                  onValueChange={(brandSlug) => {
+                    const isSelected = filters.brand === brandSlug
+                    if (isSelected) {
+                      onSubmit({ ...filters, page: 1, brand: undefined })
+                    } else {
+                      onSubmit({ ...filters, page: 1, brand: brandSlug })
+                    }
+                  }}
+                >
+                  {brands.map((brand) => (
+                    <DropdownMenuRadioItem value={brand.slug} key={brand.slug} className='cursor-pointer'>
+                      {brand.name}
+                    </DropdownMenuRadioItem>
+                  ))}
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Input
+              type='text'
+              placeholder={placeholder}
+              className='text-md md:text-md w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
+              {...register('q')}
+            />
+            <Button className='px-4'>
+              <SearchIcon />
+            </Button>
+          </div>
         </form>
       </section>
 
-      <section aria-label='brand filters' className='flex flex-col gap-4 items-center max-w-[576px]'>
-        <div aria-label='brand selector' className='grid grid-cols-4 gap-2'>
-          {brands.map((brand) => {
-            // TODO: as more brands are added, this doesn't work. decide how to show 10+ brands
-            const isSelected = filters.brand === brand.slug
-            let className = 'border rounded py-2 px-2 h-32 cursor-pointer'
-            if (isSelected) {
-              className += ' border-zinc-800'
-            }
-            const onClick = () => {
-              if (isSelected) {
-                onSubmit({ ...filters, page: 1, brand: undefined })
-              } else {
-                onSubmit({ ...filters, page: 1, brand: brand.slug })
-              }
-            }
-            return (
-              <div className={className} onClick={onClick} key={`brand-${brand.slug}`}>
-                <div className='flex flex-col items-center justify-center text-center w-full h-full'>
-                  <h2>{brand.name}</h2>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-
+      <section aria-label='selected-brand' className='flex flex-col gap-4 items-center max-w-[576px]'>
         {selectedBrand && (
           <div
             aria-label='selected brand info'
