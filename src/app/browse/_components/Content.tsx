@@ -73,7 +73,7 @@ export const Content = ({ brands }: Props) => {
   const query = useSearchParams()
   const filters = useMemo(() => extractFilters(query), [query])
   const { handleSubmit, register } = useForm<FormValues>({
-    defaultValues: filters,
+    values: filters,
   })
 
   const { data, isLoading, error } = useQuery({
