@@ -7,13 +7,14 @@ import type { Product } from '../_types/schema'
 import { ProductGrid } from './ProductGrid'
 import { type ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/navigation'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
 
 const PLACEHOLDERS = [
-  'sweet and delicate flavors',
-  'memories from my childhood',
-  'good cup sidamo special',
-  'coffee from sitio san roque',
+  'Sweet and delicate tasting coffee',
+  'Coffee that reminds me of my childhood',
+  'Coffee beans good for a sweet espresso',
+  'Coffee good for cozy weather',
+  'Beans from san roque',
 ] as const
 
 interface FormValues {
@@ -48,8 +49,8 @@ export const Content = () => {
   const query = useSearchParams()
   const filters = useMemo(() => extractFilters(query), [query])
 
-  const { handleSubmit, register, setValue } = useForm<FormValues>({
-    defaultValues: filters,
+  const { handleSubmit, register } = useForm<FormValues>({
+    values: filters,
   })
 
   const { data, isLoading, error } = useQuery({
@@ -72,10 +73,6 @@ export const Content = () => {
   const onSubmit = handleSubmit((values) => {
     const q = values.q || placeholder
     const newQuery = filtersToQuery({ ...values, q })
-    // // submit the placeholder if it doesn't exist
-    if (!values.q) {
-      setValue('q', q)
-    }
 
     router.push(`${window.location.pathname}?${newQuery}`, { scroll: false })
   })
@@ -83,23 +80,17 @@ export const Content = () => {
   return (
     <>
       <h1 className='text-3xl font-light'>Coffee Catalog</h1>
-      <section className='flex flex-col items-center'>
-        <form className='flex flex-col items-center mt-4 gap-1' onSubmit={onSubmit}>
-          <Label className='text-md mb-1' htmlFor={register('q').name}>
-            {"I'm looking for..."}
-          </Label>
+      <section className='flex flex-col items-center mt-8'>
+        <form className='flex gap-2' onSubmit={onSubmit}>
           <Input
             type='text'
             placeholder={placeholder}
-            className='text-md md:text-md w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
+            className='text-md md:text-md w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500'
             {...register('q')}
           />
-          <button
-            type='submit'
-            className='mt-2 px-4 py-1 rounded bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors'
-          >
-            search
-          </button>
+          <Button type='submit' className='px-4 py-1'>
+            Search
+          </Button>
         </form>
       </section>
 

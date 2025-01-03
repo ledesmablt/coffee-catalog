@@ -12,7 +12,6 @@ import { GOOGLE_MAPS_API_KEY } from '@/lib/env'
 import { ImageWithFallback } from '../../_components/ImageWithFallback'
 import { ProductGrid } from '@/app/_components/ProductGrid'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -65,7 +64,6 @@ export interface Props {
   brands: Brand[]
 }
 export const Content = ({ brands }: Props) => {
-  const placeholder = 'gesha natural'
   const resultsRef = useRef<HTMLDivElement>(null)
   const [scrollToResults, setScrollToResults] = useState(false)
 
@@ -114,11 +112,8 @@ export const Content = ({ brands }: Props) => {
   return (
     <>
       <h1 className='text-3xl font-light'>Browse all products</h1>
-      <section aria-label='search input' className='flex flex-col items-center'>
-        <form className='flex flex-col items-center mt-4 gap-1' onSubmit={handleSubmit(onSubmit)}>
-          <Label className='text-md mb-1' htmlFor={register('q').name}>
-            {"I'm looking for..."}
-          </Label>
+      <section aria-label='search input' className='flex flex-col items-center mt-8'>
+        <form className='flex flex-col items-center gap-1' onSubmit={handleSubmit(onSubmit)}>
           <div className='flex gap-2'>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -154,11 +149,11 @@ export const Content = ({ brands }: Props) => {
 
             <Input
               type='text'
-              placeholder={placeholder}
-              className='text-md md:text-md w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500 text-center placeholder:text-center'
+              placeholder='enter a word or phrase'
+              className='text-md md:text-md w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500'
               {...register('q')}
             />
-            <Button className='px-4'>
+            <Button type='submit' className='px-4'>
               <SearchIcon />
             </Button>
           </div>
@@ -220,7 +215,7 @@ export const Content = ({ brands }: Props) => {
         )}
       </section>
 
-      <section aria-label='product results' className='flex flex-col items-center gap-4 my-6' ref={resultsRef}>
+      <section aria-label='product results' className='flex flex-col items-center gap-4 mb-6' ref={resultsRef}>
         {error && (
           <div className='text-zinc-600'>
             <p>oops! something went wrong. please try again later.</p>
