@@ -86,25 +86,36 @@ export const Content = ({ brands }: Props) => {
     },
   })
 
+  // client error: document is not defined
+  const windowHeight = typeof window === 'undefined' ? 0 : document.documentElement.clientHeight
   useEffect(() => {
-    if (!resultsRef.current || !scrollToResults) {
+    const resultsSection = resultsRef.current
+    if (!resultsSection || !scrollToResults) {
       return
     }
 
-    resultsRef.current.scrollIntoView({ behavior: 'instant' })
+    // scroll if the top of the results isn't visible enough
+    const { top } = resultsSection.getBoundingClientRect()
+    if (top > windowHeight * 0.6) {
+      resultsSection.scrollIntoView({ behavior: 'instant' })
+    }
     setScrollToResults(false)
-  }, [scrollToResults, resultsRef])
+  }, [scrollToResults, resultsRef, windowHeight])
 
   const onSubmit = (values: FormValues) => {
     if (values.q !== filters.q) {
       // reset to first page if search input changed
       values.page = 1
     }
-    if (values.page !== filters.page) {
-      setScrollToResults(true)
-    }
     const newQuery = filtersToQuery(values)
     router.push(`${window.location.pathname}?${newQuery}`, { scroll: false })
+
+    let shouldScroll = true
+    if (values.brand !== filters.brand) {
+      // scrolling when brands are changed looks jarring
+      shouldScroll = false
+    }
+    setScrollToResults(shouldScroll)
   }
 
   const selectedBrand = brands.find((brand) => filters.brand === brand.slug)
