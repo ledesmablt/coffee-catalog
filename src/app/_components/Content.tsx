@@ -80,19 +80,17 @@ export const Content = () => {
   return (
     <>
       <h1 className='text-3xl font-light'>Coffee Catalog</h1>
-      <section className='flex flex-col items-center mt-8'>
-        <form className='flex gap-2' onSubmit={onSubmit}>
-          <Input
-            type='text'
-            placeholder={placeholder}
-            className='text-md md:text-md w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500'
-            {...register('q')}
-          />
-          <Button type='submit' className='px-4 py-1'>
-            Search
-          </Button>
-        </form>
-      </section>
+      <form className='flex gap-2 mt-8 w-full max-w-md md:w-auto' onSubmit={onSubmit}>
+        <Input
+          type='text'
+          placeholder={placeholder}
+          className='text-md md:text-md md:w-96 px-4 py-2 border rounded-md border-zinc-500 placeholder:text-xs'
+          {...register('q')}
+        />
+        <Button type='submit' className='px-4 py-1'>
+          Search
+        </Button>
+      </form>
 
       {isLoading && <p className='mt-4 text-zinc-700'>preparing your ☕️...</p>}
       {!isLoading && <p className='mt-4 text-zinc-700'></p>}

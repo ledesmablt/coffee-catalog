@@ -112,53 +112,49 @@ export const Content = ({ brands }: Props) => {
   return (
     <>
       <h1 className='text-3xl font-light'>Browse all products</h1>
-      <section aria-label='search input' className='flex flex-col items-center mt-8'>
-        <form className='flex flex-col items-center gap-1' onSubmit={handleSubmit(onSubmit)}>
-          <div className='flex gap-2'>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant='outline' className='relative aspect-square px-2' aria-label='Show filters'>
-                  <ListFilterIcon />
-                  {selectedBrand && (
-                    <span className='absolute top-0 right-0 h-2 w-2 rounded-full bg-zinc-700 transform translate-x-1/2 -translate-y-1/2' />
-                  )}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className='w-56' align='start'>
-                <DropdownMenuLabel>Brands</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup
-                  value={filters.brand ?? ''}
-                  onValueChange={(brandSlug) => {
-                    const isSelected = filters.brand === brandSlug
-                    if (isSelected) {
-                      onSubmit({ ...filters, page: 1, brand: undefined })
-                    } else {
-                      onSubmit({ ...filters, page: 1, brand: brandSlug })
-                    }
-                  }}
-                >
-                  {brands.map((brand) => (
-                    <DropdownMenuRadioItem value={brand.slug} key={brand.slug} className='cursor-pointer'>
-                      {brand.name}
-                    </DropdownMenuRadioItem>
-                  ))}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <Input
-              type='text'
-              placeholder='enter a word or phrase'
-              className='text-md md:text-md w-80 md:w-96 px-4 py-2 border rounded-md border-zinc-500'
-              {...register('q')}
-            />
-            <Button type='submit' className='px-4'>
-              <SearchIcon />
+      <form className='flex items-center mt-8 gap-2 w-full max-w-md md:w-auto' onSubmit={handleSubmit(onSubmit)}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant='outline' className='relative aspect-square px-2' aria-label='Show filters'>
+              <ListFilterIcon />
+              {selectedBrand && (
+                <span className='absolute top-0 right-0 h-2 w-2 rounded-full bg-zinc-700 transform translate-x-1/2 -translate-y-1/2' />
+              )}
             </Button>
-          </div>
-        </form>
-      </section>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className='w-56' align='start'>
+            <DropdownMenuLabel>Brands</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuRadioGroup
+              value={filters.brand ?? ''}
+              onValueChange={(brandSlug) => {
+                const isSelected = filters.brand === brandSlug
+                if (isSelected) {
+                  onSubmit({ ...filters, page: 1, brand: undefined })
+                } else {
+                  onSubmit({ ...filters, page: 1, brand: brandSlug })
+                }
+              }}
+            >
+              {brands.map((brand) => (
+                <DropdownMenuRadioItem value={brand.slug} key={brand.slug} className='cursor-pointer'>
+                  {brand.name}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Input
+          type='text'
+          placeholder='enter a word or phrase'
+          className='text-md md:text-md md:w-96 px-4 py-2 border rounded-md border-zinc-500 placeholder:text-xs'
+          {...register('q')}
+        />
+        <Button type='submit' className='px-4'>
+          <SearchIcon />
+        </Button>
+      </form>
 
       <section aria-label='selected-brand' className='flex flex-col gap-4 items-center max-w-[576px]'>
         {selectedBrand && (
