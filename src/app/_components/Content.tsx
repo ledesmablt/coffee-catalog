@@ -71,9 +71,11 @@ export const Content = () => {
   })
 
   const onSubmit = handleSubmit((values) => {
-    const q = values.q || placeholder
-    const newQuery = filtersToQuery({ ...values, q })
+    if (!values.q) {
+      return
+    }
 
+    const newQuery = filtersToQuery(values)
     router.push(`${window.location.pathname}?${newQuery}`, { scroll: false })
   })
 
