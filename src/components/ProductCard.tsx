@@ -1,5 +1,5 @@
 import { ExternalLink } from 'lucide-react'
-import type { Product } from '../_types/schema'
+import type { Product } from '@/_types/schema'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ImageWithFallback } from './ImageWithFallback'

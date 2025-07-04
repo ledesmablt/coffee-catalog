@@ -2,7 +2,7 @@ import React from 'react'
 import { ShoppingCart } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Product } from '../_types/schema'
+import { Product } from '@/_types/schema'
 import { ImageWithFallback } from './ImageWithFallback'
 
 interface ProductDialogProps {

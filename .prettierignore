@@ -2,3 +2,4 @@ data/**.json
 drizzle/**/*
 tsconfig.json
 *.css
+README.md

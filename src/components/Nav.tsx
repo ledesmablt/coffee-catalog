@@ -6,8 +6,8 @@ const LINKS = [
     label: 'home',
   },
   {
-    href: '/browse',
-    label: 'browse',
+    href: '/search',
+    label: 'smart search',
   },
 ] as const
 

@@ -1,7 +1,16 @@
+import type { Metadata } from 'next'
 import { Content } from './_components/Content'
+import { loadProps } from './_utils/loadProps'
 
-const RootPage = () => {
-  return <Content />
+export const metadata: Metadata = {
+  title: 'Coffee Catalog',
+  description: 'Coffee Catalog',
+  openGraph: {},
 }
 
-export default RootPage
+const CoffeeCatalogBrowsePage = async () => {
+  const props = await loadProps()
+  return <Content {...props} />
+}
+
+export default CoffeeCatalogBrowsePage

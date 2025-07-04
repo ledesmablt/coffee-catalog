@@ -1,4 +1,4 @@
-import { Product } from '@/app/_types/schema'
+import { Product } from '@/_types/schema'
 import { ProductCard } from './ProductCard'
 import { Skeleton } from '@/components/ui/skeleton'
 

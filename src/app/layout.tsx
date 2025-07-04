@@ -1,6 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import InnerLayout from './_components/InnerLayout'
+import InnerLayout from '@/components/InnerLayout'
 
 export const metadata: Metadata = {
   title: 'Coffee Catalog PH',

@@ -1,4 +1,4 @@
-import { Product } from '../../_types/schema'
+import type { Product } from '@/_types/schema'
 
 export type SearchFilterFn = (searchQuery: string, products: Product[]) => Promise<Product[]>
 
